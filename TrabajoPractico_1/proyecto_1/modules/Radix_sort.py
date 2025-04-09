@@ -31,7 +31,6 @@ lista_ordenada = (radix_sort(lista))
 
 
 #Test
-
 if (lista_ordenada) == lista_test_prueba:
     print(True)
 else:

@@ -18,6 +18,7 @@ tamaños_de_lista = range(1, 1001, 10)  # Listas desde 1 hasta 1000 elementos, e
 tiempos_bubble = []
 tiempos_quick = []
 tiempos_radix = []
+tiempos_sorted = []
 
 
 #Esto es para saber de que tamaño son las distintas listas
@@ -44,6 +45,15 @@ for tamaño in tamaños_de_lista:
     inicio = time.time() #Guardo el tiempo de inicio
     radix_sort(Lista_copia)
     tiempos_radix.append(time.time() - inicio) #Agrego a la lista de tiempo de bubble lo que se demoro en ejecutar
+    
+    #Sorted
+    Lista_copia = lista.copy()
+    inicio = time.time()
+    sorted(Lista_copia)
+    tiempos_sorted.append(time.time() - inicio)
+    
+
+
 
 
 #Grafico de resultados
@@ -52,6 +62,7 @@ plt.figure(figsize=(10, 6))
 plt.plot(tamaños_de_lista, tiempos_bubble, label='Bubble Sort (O(n²))')
 plt.plot(tamaños_de_lista, tiempos_quick, label='Quick Sort (O(n log n) promedio)')
 plt.plot(tamaños_de_lista, tiempos_radix, label='Radix Sort (O(nk))')
+plt.plot(tamaños_de_lista, tiempos_sorted, label= 'Sorted (O(n log n)')
 plt.xlabel('Tamaño de la lista')
 plt.ylabel('Tiempo de ejecución (segundos)')
 plt.title('Comparación de Algoritmos de Ordenamiento')
