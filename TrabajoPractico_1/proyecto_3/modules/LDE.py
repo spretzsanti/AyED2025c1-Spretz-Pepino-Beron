@@ -4,7 +4,7 @@ class Nodo():
         self.siguiente = None
         self.anterior = None
 
-class ListaDobleEnlazada():
+class listadoble():
     def __init__(self):
         self.cabeza = None
         self.cola = None
