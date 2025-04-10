@@ -1,6 +1,8 @@
 {
     "python.analysis.extraPaths": [
-        "./TrabajoPractico_1/proyecto_3/modules",
-        "./TrabajoPractico_1/proyecto_3"
+        "./TrabajoPractico_1/proyecto_1/modules",
+        "./TrabajoPractico_1/proyecto_3",
+        "./TrabajoPractico_1/proyecto_1/modules"
+
     ]
 }
