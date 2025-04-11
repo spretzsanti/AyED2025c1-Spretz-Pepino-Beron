@@ -132,3 +132,39 @@ class listadoble():
 
         # Se retorna el dato contenido en el nodo eliminado
         return nodo_eliminado.dato
+
+    def copiar(self):
+        nuevo_lista = listadoble()
+        actual = self.cabeza
+    
+        while actual is not None:
+            nuevo_lista.agregar_al_final(actual.dato)
+            actual = actual.siguiente
+        return nuevo_lista
+    
+    def invertir(self):
+        nuevo_lista = listadoble()
+        actual = self.cola
+    
+        while actual is not None:
+            nuevo_lista.agregar_al_final(actual.dato)
+            actual = actual.anterior
+        return nuevo_lista
+    
+    #Agregar execpciones si vacia si no existe toda la bola
+    def concatenar(self,Lista):
+        copia = Lista.copiar()
+        self.cola.siguiente = copia.cabeza
+        copia.cabeza.anterior = self.cola
+        self.cola = copia.cola
+
+    def __add__(self,Lista):
+        nueva_lista = self.copiar()
+        nueva_lista.concatenar(Lista)
+        return nueva_lista
+    
+    
+        
+    
+            
+

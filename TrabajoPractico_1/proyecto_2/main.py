@@ -1,17 +1,16 @@
 from modules.Listadobleenlazada import listadoble
 
 lista = listadoble()
-lista.mostrar()
+
 #print(lista.esta_vacia())
 lista.agregar_al_final(5)
 lista.agregar_al_final(0.4)
 lista.agregar_al_final("a")
 lista.mostrar()
 #print(lista.esta_vacia())
-print(lista._len_())
-a = input("escribi la posicion: ")
-lista.insertar(900,a)
-lista.mostrar()
-b = input("escribi la posicion: ")
-print(lista.extraer(int(b)))
-lista.mostrar()
+
+invertida = lista.invertir()
+invertida.mostrar()
+
+lista3 = lista + invertida
+lista3.mostrar()
