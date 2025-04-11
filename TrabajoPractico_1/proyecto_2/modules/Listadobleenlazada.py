@@ -55,10 +55,9 @@ class listadoble():
         
         if posicion == "":
             posicion = None
-
-        if posicion is None:
             self.agregar_al_final(dato)
             return
+
         
         posicion=int(posicion)# esto evita que el isinstance tire valueerror, pero falla si ingresamos una posicion como "a"        
         # Verificar que la posición sea un entero no negativo

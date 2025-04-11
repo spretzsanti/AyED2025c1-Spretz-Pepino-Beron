@@ -29,9 +29,9 @@ for tamaño in tamaños_de_lista:
 
     #Bubble_Sort
     Lista_copia = lista.copy() #Para no tener que generarla de nuevo para las otras pruebas
-    inicio = time.time() #Guardo el tiempo de inicio
+    inicio = time.perf_counter() #Guardo el tiempo de inicio
     BubbleSort(Lista_copia)
-    tiempos_bubble.append(time.time() - inicio) #Agrego a la lista de tiempo de bubble lo que se demoro en ejecutar
+    tiempos_bubble.append(time.perf_counter() - inicio) #Agrego a la lista de tiempo de bubble lo que se demoro en ejecutar
 
     #Quicksort
     Lista_copia = lista.copy() #Para no tener que generarla de nuevo para las otras pruebas
