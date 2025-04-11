@@ -4,11 +4,7 @@ class Nodo():
         self.siguiente = None
         self.anterior = None
 
-<<<<<<< HEAD
-class ListaDobleEnlazada():
-=======
 class listadoble():
->>>>>>> 5b8907c (seguimos el trabajo del problema 2, insertar y extraer)
     def __init__(self):
         self.cabeza = None
         self.cola = None
@@ -54,10 +50,6 @@ class listadoble():
             actual = actual.siguiente
         return count
 
-<<<<<<< HEAD
-    """def insertar(self, dato, posicion = None):
-        if posicion is None or ():"""
-=======
     def insertar(self, dato, posicion):
         nuevo_nodo = Nodo(dato)
         
@@ -141,4 +133,3 @@ class listadoble():
 
         # Se retorna el dato contenido en el nodo eliminado
         return nodo_eliminado.dato
->>>>>>> 5b8907c (seguimos el trabajo del problema 2, insertar y extraer)
