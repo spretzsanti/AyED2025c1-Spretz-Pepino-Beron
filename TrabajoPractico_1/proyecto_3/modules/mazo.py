@@ -67,19 +67,24 @@ class Mazo:
     def poner_carta_abajo(self,carta):
         Nuevo_nodo = self.Nodo(carta,self.final,None)
         if self.vacio() == True:
-            self.final = Nuevo_nodo 
+            self.inicio = Nuevo_nodo 
         else:
             self.final.siguiente = Nuevo_nodo
         
         self.final = Nuevo_nodo
         self.tamañio +=1
+
+
+    def mostrar(self):
+        actual = self.inicio
+        while actual:
+            print(actual.carta, end=" ")
+            actual = actual.siguiente
+        print()
         
     
             
             
             
-        
-        
-            
-            
+
         
