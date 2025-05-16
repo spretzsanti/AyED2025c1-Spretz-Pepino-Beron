@@ -7,8 +7,6 @@ Ejemplo: “Este es un script en el que se comparan algoritmos de ordenamiento. 
 ---
 ## 🏗Arquitectura General
 
-Explica brevemente cómo está organizado el código (funciones y/o clases)
-
 Las gráficas de los resultados están disponible en la carpeta [data](./data) del proyecto.
 
 El informe completo está disponible en la carpeta [docs](./docs) del proyecto.
@@ -27,17 +25,12 @@ El informe completo está disponible en la carpeta [docs](./docs) del proyecto.
 
 2. **Crear y activar** un entorno virtual.
 
-3. **Instalar las dependencias**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-   El archivo `requirements.txt` se encuentran en la carpeta [deps](./deps) del proyecto.
-
 ---
 ## 🙎‍♀️🙎‍♂️Autores
 
-- Apellido y Nombre del primer integrante
-- Apellido y Nombre del primer integrante
+- Beron Gonzalo
+- Spretz Santiago
+- Pepino Pablo Jose
 
 ---
 

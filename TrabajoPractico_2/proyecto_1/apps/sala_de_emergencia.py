@@ -5,7 +5,7 @@
 """
 Sala de emergencias
 """
-
+"""
 import time
 import datetime
 import modules.pacientes as pac
@@ -50,3 +50,31 @@ for i in range(n):
     print('-*-'*15)
     
     time.sleep(1)
+
+    #############################################################
+    """
+# modules/sala.py
+import datetime
+import random
+from modules.pacientes import Paciente
+
+class SalaEmergencias:
+    def __init__(self, cola):
+        self.cola = cola
+
+    def nuevo_paciente(self):
+        p = Paciente()
+        self.cola.encolar(p)
+        return p
+
+    def atender_ciclo(self, prob=0.5):
+        if random.random() < prob and len(self.cola)>0:
+            return self.cola.desencolar()
+        return None
+
+    def pendientes(self):
+        return len(self.cola)
+
+    def listado(self):
+        # opcional: inspeccionar cola._heap o cola interna
+        pass

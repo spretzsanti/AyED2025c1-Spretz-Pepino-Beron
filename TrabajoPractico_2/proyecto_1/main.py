@@ -1,15 +1,19 @@
 #No se si esto va aca o en modulos modifique el setting.json para esto
 
 #Importo los algoritmos
-from modules.BubbleSort import BubbleSort
-from modules.Quicksort import quicksort
-from modules.Radix_sort import radix_sort
+from modules.bubbleSort import BubbleSort
+from modules.quicksort import QuickSort
+from modules.radix_sort import RadixSort
 
 
 #Importo librerias para graficar y medir tiempos
 import time
 import matplotlib.pyplot as plt
 import random
+
+bubble = BubbleSort()
+quick  = QuickSort()
+radix  = RadixSort()
 
 #Donde estan los diferentes tamaños de las listas
 tamaños_de_lista = range(1, 1001, 10)  # Listas desde 1 hasta 1000 elementos, en pasos de 10
@@ -30,20 +34,20 @@ for tamaño in tamaños_de_lista:
     #Bubble_Sort
     Lista_copia = lista.copy() #Para no tener que generarla de nuevo para las otras pruebas
     inicio = time.perf_counter() #Guardo el tiempo de inicio
-    BubbleSort(Lista_copia)
+    bubble.sort(Lista_copia)
     tiempos_bubble.append(time.perf_counter() - inicio) #Agrego a la lista de tiempo de bubble lo que se demoro en ejecutar
 
     #Quicksort
     Lista_copia = lista.copy() #Para no tener que generarla de nuevo para las otras pruebas
     inicio = time.time() #Guardo el tiempo de inicio
-    quicksort(Lista_copia)
+    quick.sort(Lista_copia)
     tiempos_quick.append(time.time() - inicio) #Agrego a la lista de tiempo de bubble lo que se demoro en ejecutar
 
 
     #Radix Sort
     Lista_copia = lista.copy() #Para no tener que generarla de nuevo para las otras pruebas
     inicio = time.time() #Guardo el tiempo de inicio
-    radix_sort(Lista_copia)
+    radix.sort(Lista_copia)
     tiempos_radix.append(time.time() - inicio) #Agrego a la lista de tiempo de bubble lo que se demoro en ejecutar
     
     #Sorted
