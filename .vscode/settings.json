@@ -1,5 +1,12 @@
 {
     "python.analysis.extraPaths": [
+<<<<<<< HEAD
         "./TrabajoPractico_1/proyecto_1/modules"
+=======
+        "./TrabajoPractico_1/proyecto_1/modules",
+        "./TrabajoPractico_1/proyecto_3",
+        "./TrabajoPractico_1/proyecto_1/modules"
+
+>>>>>>> cfe0732f3cb16e623fc7fa7b721317a874582eb8
     ]
 }
