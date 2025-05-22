@@ -28,35 +28,29 @@ class nodoAVL: #Cada nodoAVL es un dato de temperatura y fecha en si
 
 
 class AVL: 
+    #Constructir
     def __init__(self):
         self.raiz = None
 
-
+    #Devuelve altura
     def altura(self, nodo):
         if not nodo:
             return 0
 
         return nodo.altura
 
+    #Devuelve Factod de eq
     def factor_eq(self,nodo): #agregar validaciones
           return self.altura(nodo.izquierda) - self.altura(nodo.derecha)      
 
 
 
-
+    #Actualiza altura de los nodos
     def actualizar_altura(self, nodo):
         if not nodo: # Si el nodo es None
             return   # No hacemos nada y salimos
         # Si el nodo SÍ existe, entonces procedemos con la lógica original:
         nodo.altura = 1 + max(self.altura(nodo.izquierda), self.altura(nodo.derecha))
-
-
-   # def actualizar_altura(self,nodo): #actualizamos la altura de los nodos post rotaciones, a partir de la altura de sus hijos izq y der
-        #nodo.altura = 1+ max(self.altura(nodo.izquierda), nodo.altura(nodo.derecha))
-
-
-
-
 
 
 
@@ -103,7 +97,7 @@ class AVL:
          return self.rot_izquierda(z)
 
 
-
+    #Metodo publico de busqueda
     def buscar(self,fecha_obj:datetime.date):
         
         nodo_encontrado = self._buscar_nodo(self.raiz,fecha_obj)
@@ -112,7 +106,7 @@ class AVL:
         return None # Devuelve None si no se encuentra
 
 
-
+    #Metodo privado de busqueda
     def _buscar_nodo(self,nodo_actual,fecha_obj):
         if not nodo_actual or nodo_actual.fecha == fecha_obj:
             return nodo_actual
@@ -122,7 +116,7 @@ class AVL:
         else: # fecha_obj > nodo_actual.fecha
             return self._buscar_nodo(nodo_actual.derecha, fecha_obj)
 
-
+    #Metodo publico de insersion
     def insertar(self,fecha:datetime.date, temperatura:float):
         self.raiz = self._insertar(self.raiz,fecha,temperatura)
 
@@ -172,6 +166,30 @@ class AVL:
             return self.rot_izquierda(nodo_actual)
 
         return nodo_actual #Si estaba bien
+
+
+
+
+    def obtener_rangos(self,fecha_min:datetime.date,fecha_max:datetime.date):
+            temperaturas_encontradas = []
+            self._obtener_rangos(self.raiz,fecha_min,fecha_max,temperaturas_encontradas)
+            return temperaturas_encontradas
+
+    def _obtener_rangos(self,nodo_actual,fecha_min,fecha_max,temperaturas_encontradas):
+            if not nodo_actual:
+                return
+
+            #Si la fecha minima es menor a la actual no revisamos aca
+            if fecha_min < nodo_actual.fecha:
+                self._obtener_rangos(nodo_actual.izquierda, fecha_min, fecha_max, temperaturas_encontradas)
+            #Si la fecha esta en rango agregamos la temperatura
+            if fecha_min <= nodo_actual.fecha <= fecha_max:
+                temperaturas_encontradas.append(nodo_actual.temperatura)
+            
+            #Si la fecha es mas grande que la actual revisamos al otro lado
+            if fecha_max > nodo_actual.fecha:
+                self._obtener_rangos(nodo_actual.derecha, fecha_min, fecha_max, temperaturas_encontradas)
+
 
 
 
