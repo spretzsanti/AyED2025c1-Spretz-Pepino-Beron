@@ -1,18 +1,14 @@
 import datetime
-
+ 
 
 class nodoAVL: #Cada nodoAVL es un dato de temperatura y fecha en si
-    def __init__(self,fecha,temperatura):
+    def __init__(self,fecha:datetime.date,temperatura):
         #Logicas para fechas, habria que revisarlo
         #si la fecha es un string
-        if isinstance(fecha,str):
-            self.fecha = datetime.datetime.strptime(fecha, "%d/%m/%Y").date() #Convertimos string en fecha, aca asumo que viene en el formato solicitado pero habria que poner un control
+      
+        if not isinstance(fecha,datetime.date):
+            raise ValueError("La fecha debe venir en el formato correspondiente (Error en guardar_temp)")
         
-        elif isinstance(fecha,datetime.date):
-            self.fecha = datetime.date
-        
-        else:
-            raise ValueError("La fecha debe venir en el formato correspondiente")
 
         self.temperatura = float(temperatura)
         
@@ -88,8 +84,12 @@ class AVL:
          z.derecha = self.rot_derecha(z.derecha)
 
 
-    #Metodos del propio arbol
-    def insertar(self,nodo_actual,fecha:datetime.date, temperatura:float):
+    def insertar(self,fecha:datetime.date, temperatura:float):
+        self.raiz = self._insertar(self.raiz,fecha,temperatura)
+
+
+    #Metodos del propio arbol, privado
+    def _insertar(self,nodo_actual,fecha:datetime.date, temperatura:float):
 
         #Inserciones normales
         if not nodo_actual:
