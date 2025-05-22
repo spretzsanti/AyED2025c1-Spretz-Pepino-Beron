@@ -11,7 +11,7 @@ class nodoAVL: #Cada nodoAVL es un dato de temperatura y fecha en si
         
 
         self.temperatura = float(temperatura)
-        
+        self.fecha = fecha
         #Logica NODO
         self.izquierda = None
         self.derecha = None
@@ -39,10 +39,27 @@ class AVL:
         return nodo.altura
 
     def factor_eq(self,nodo): #agregar validaciones
-          return self._altura(nodo.izquierda) - self._altura(nodo.derecha)      
+          return self.altura(nodo.izquierda) - self.altura(nodo.derecha)      
 
-    def actualizar_altura(self,nodo): #actualizamos la altura de los nodos post rotaciones, a partir de la altura de sus hijos izq y der
-        nodo.altura = 1+ max(self.altura(nodo.izquierda), nodo.altura(nodo.derecha))
+
+
+
+    def actualizar_altura(self, nodo):
+        if not nodo: # Si el nodo es None
+            return   # No hacemos nada y salimos
+        # Si el nodo SÍ existe, entonces procedemos con la lógica original:
+        nodo.altura = 1 + max(self.altura(nodo.izquierda), self.altura(nodo.derecha))
+
+
+   # def actualizar_altura(self,nodo): #actualizamos la altura de los nodos post rotaciones, a partir de la altura de sus hijos izq y der
+        #nodo.altura = 1+ max(self.altura(nodo.izquierda), nodo.altura(nodo.derecha))
+
+
+
+
+
+
+
 
     #Rotaciones
     
@@ -79,9 +96,31 @@ class AVL:
 
     def rot_izq_der(self,z):
         z.izquierda = self.rot_izquierda(z.izquierda)
+        return self.rot_derecha(z)
 
     def rot_der_izq(self,z):
          z.derecha = self.rot_derecha(z.derecha)
+         return self.rot_izquierda(z)
+
+
+
+    def buscar(self,fecha_obj:datetime.date):
+        
+        nodo_encontrado = self._buscar_nodo(self.raiz,fecha_obj)
+        if nodo_encontrado:
+            return nodo_encontrado.temperatura
+        return None # Devuelve None si no se encuentra
+
+
+
+    def _buscar_nodo(self,nodo_actual,fecha_obj):
+        if not nodo_actual or nodo_actual.fecha == fecha_obj:
+            return nodo_actual
+
+        if fecha_obj < nodo_actual.fecha:
+            return self._buscar_nodo(nodo_actual.izquierda,fecha_obj)
+        else: # fecha_obj > nodo_actual.fecha
+            return self._buscar_nodo(nodo_actual.derecha, fecha_obj)
 
 
     def insertar(self,fecha:datetime.date, temperatura:float):
@@ -96,10 +135,10 @@ class AVL:
             return nodoAVL(fecha,temperatura)
 
         elif fecha > nodo_actual.fecha:
-            nodo_actual.derecha = self.insertar(nodo_actual.derecha,fecha,temperatura) 
+            nodo_actual.derecha = self._insertar(nodo_actual.derecha,fecha,temperatura) 
         
         elif fecha < nodo_actual.fecha:
-            nodo_actual.izquierda = self.insertar(nodo_actual.izquierda,fecha,temperatura) 
+            nodo_actual.izquierda = self._insertar(nodo_actual.izquierda,fecha,temperatura) 
         else:
             #Esto es para las fechas duplicadas, actualizamos el valor de la temperatura
             nodo_actual.temperatura = temperatura
@@ -110,7 +149,7 @@ class AVL:
         #Paso 2
         self.actualizar_altura(nodo_actual)
         #Obtenemos FE
-        balance = factor_eq(nodo_actual)
+        balance = self.factor_eq(nodo_actual)
 
         
         #AHorad dependiendo del valor del factor de equolibrio hacemos las rotaciones correspondiente
@@ -120,7 +159,7 @@ class AVL:
             return self.rot_derecha(nodo_actual)
 
         #Dos a la derecha
-        if balance < -1 and fecha > nodo_actual.izquierda.fecha:
+        if balance < -1 and fecha > nodo_actual.derecha.fecha:
             return self.rot_izquierda(nodo_actual)
 
         #Izquierda y derecha
@@ -128,7 +167,7 @@ class AVL:
             nodo_actual.izquierda = self.rot_izquierda(nodo_actual.izquierda)
             return self.rot_derecha(nodo_actual)
         #Derecha y izquierda
-        if balance < -1 and fecha < nodo_actual.izquierda.fecha:
+        if balance < -1 and fecha < nodo_actual.derecha.fecha:
             nodo_actual.derecha = self.rot_derecha(nodo_actual.derecha)
             return self.rot_izquierda(nodo_actual)
 
