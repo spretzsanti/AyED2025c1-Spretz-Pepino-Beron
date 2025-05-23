@@ -35,7 +35,7 @@ class Paciente:
         cad = self.__nombre + ' '
         cad += self.__apellido + '\t -> '
         cad += str(self.__riesgo) + '-' + self.__descripcion
-        cad += str(self.__posicion_en_la_fila)
+        cad += ' ' + str(self.__posicion_en_la_fila)
         return cad
         
     def devolver_orden_llegada(self):

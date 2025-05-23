@@ -1,6 +1,6 @@
 
 #el monticulo esta compuesto por listas de python
-import pacientes
+from modules.pacientes import Paciente
 
 class MonticuloBinario:
     def __init__(self):
@@ -55,7 +55,11 @@ class MonticuloBinario:
           self.infiltAbajo(i)
           i = i - 1
 
+    def __len__(self):
+        return self.tamanoActual
 
+    def __bool__(self):
+        return self.tamanoActual > 0
 
 if __name__ == "__main__":
    miMonticulo = MonticuloBinario()
