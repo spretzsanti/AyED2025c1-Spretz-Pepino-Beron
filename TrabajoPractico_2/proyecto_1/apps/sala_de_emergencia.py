@@ -5,7 +5,7 @@
 """
 Sala de emergencias
 """
-"""
+
 import time
 import datetime
 import modules.pacientes as pac
@@ -17,6 +17,7 @@ cola_de_espera = list()
 
 # Ciclo que gestiona la simulación
 for i in range(n):
+    orden_de_llegada = i
     # Fecha y hora de entrada de un paciente
     ahora = datetime.datetime.now()
     fecha_y_hora = ahora.strftime('%d/%m/%Y %H:%M:%S')
@@ -25,7 +26,7 @@ for i in range(n):
 
     # Se crea un paciente un paciente por segundo
     # La criticidad del paciente es aleatoria
-    paciente = pac.Paciente()
+    paciente = pac.Paciente(orden_de_llegada)# pasamos el orden de llegada
     cola_de_espera.append(paciente)
 
     # Atención de paciente en este ciclo: en el 50% de los casos
@@ -45,14 +46,14 @@ for i in range(n):
     print('Pacientes que faltan atenderse:', len(cola_de_espera))
     for paciente in cola_de_espera:
         print('\t', paciente)
-    
+        #print(paciente.devolver_orden_llegada())
     print()
     print('-*-'*15)
     
     time.sleep(1)
 
     #############################################################
-    """
+"""
 # modules/sala.py
 import datetime
 import random
@@ -78,3 +79,4 @@ class SalaEmergencias:
     def listado(self):
         # opcional: inspeccionar cola._heap o cola interna
         pass
+"""
