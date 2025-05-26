@@ -14,13 +14,12 @@ class ColaDePrioridad:
         prioridad = k.get_riesgo()   # 1=crítico, 2=moderado, 3=bajo
         llegada   = next(self._counter)
         # heap sortea primero por 'prioridad' y luego por 'llegada'
-        self.monticulo.insertar(k)
-        #heapq.heappush(self.monticulo, (prioridad, llegada, k))
+        self.monticulo.insertar( (prioridad, llegada, k) )# <- Tupla con criterios
 
     def desencolar(self):
         if not self.monticulo:
             return None
-        return self.monticulo.eliminarMin()#heapq.heappop(self.monticulo)[2]
+        return self.monticulo.eliminarMin()[2]  # <- Extraer el paciente de la tupla
 
     def __len__(self):
         return len(self.monticulo)

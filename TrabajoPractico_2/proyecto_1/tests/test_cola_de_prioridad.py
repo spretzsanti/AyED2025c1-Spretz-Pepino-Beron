@@ -1,14 +1,9 @@
 import unittest
 from modules.cola_de_prioridad import ColaDePrioridad
-
+from modules.pacientes import Paciente
 
 # Clase auxiliar para simular pacientes
-class Paciente:
-    def __init__(self, riesgo):
-        self.riesgo = riesgo
-    
-    def get_riesgo(self):
-        return self.riesgo
+
 
 class TestColaDePrioridad(unittest.TestCase):
     def setUp(self):
@@ -27,9 +22,9 @@ class TestColaDePrioridad(unittest.TestCase):
     
     def test_orden_prioridad(self):
         pacientes = [
-            Paciente(2),  # Moderado
-            Paciente(1),  # Crítico
-            Paciente(3),  # Bajo
+            Paciente(1,2),  # Moderado
+            Paciente(1,1),  # Crítico
+            Paciente(1,3),  # Bajo
         ]
         
         for p in pacientes:
@@ -41,8 +36,8 @@ class TestColaDePrioridad(unittest.TestCase):
         self.assertEqual(self.cola.desencolar().get_riesgo(), 3)
     
     def test_desempate_por_llegada(self):
-        p1 = Paciente(1)
-        p2 = Paciente(1)  # Misma prioridad que p1
+        p1 = Paciente(1,1)
+        p2 = Paciente(2,1)  # Misma prioridad que p1
         
         self.cola.encolar(p1)
         self.cola.encolar(p2)
@@ -53,11 +48,11 @@ class TestColaDePrioridad(unittest.TestCase):
     
     def test_caso_complejo(self):
         pacientes = [
-            Paciente(2),  # Moderado (counter=0)
-            Paciente(3),  # Bajo (counter=1)
-            Paciente(1),  # Crítico (counter=2)
-            Paciente(1),  # Crítico (counter=3)
-            Paciente(2),  # Moderado (counter=4)
+            Paciente(0, riesgo=2),  # Moderado
+            Paciente(1, riesgo=3),  # Bajo
+            Paciente(2, riesgo=1),  # Crítico
+            Paciente(3, riesgo=1),  # Crítico
+            Paciente(4, riesgo=2),  # Moderado
         ]
         
         for p in pacientes:
