@@ -51,14 +51,5 @@ class Paciente:
         else:
             return self.devolver_orden_llegada() < other.devolver_orden_llegada()
         
-
-if __name__ == "__main__":
-    p1 = Paciente(1)
-    p2 = Paciente(4)
-
-    print(p1)
-    print(p2)
-    if p1 < p2:
-        print("p1 es menor que p2")
         
         
