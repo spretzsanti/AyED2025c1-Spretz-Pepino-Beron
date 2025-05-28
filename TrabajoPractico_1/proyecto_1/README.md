@@ -12,9 +12,9 @@ Explica brevemente cómo está organizado el código (funciones y/o clases)
 La carpeta deps almacena las extensiones descargas en requirements.txt
 
 La carpeta modules contiene los modulos utilizados en el proyecto:
-   * clase BubbleSort: ordena ...
-   * clase Quicksort: ...
-   * clase Radix_sort: ...
+   * clase BubbleSort: Este script implementa y prueba el algoritmo de ordenamiento Bubble Sort con una lista de números aleatorios.
+   * clase Quicksort: Este script implementa y prueba el algoritmo Quicksort con una lista de números aleatorios.
+   * clase Radix_sort: Este script implementa y prueba el algoritmo Radix Sort (ordenamiento por raíz) para ordenar números enteros.
 
 La carpeta test contiene los test utilizados para evaluar el correcto funcionamiento del codigo:
    en este caso no se usa porque es evaluado con las fuciones de python
