@@ -1,4 +1,5 @@
-# 🐍Nombre del proyecto () 
+# 🐍Nombre del proyecto (Analisis de algortmos de ordenamiento) 
+# Trabajo Práctico Nº1, Aplicaciones de TADs
 
 Breve descripción del proyecto:
 
