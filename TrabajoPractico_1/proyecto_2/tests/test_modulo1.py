@@ -1,6 +1,5 @@
-<<<<<<< HEAD
+
 # Archivo de test para realizar pruebas unitarias del modulo1
-=======
 # -*- coding: utf-8 -*-
 """
 Created on Thu Sep  1 14:00:21 2022
@@ -456,4 +455,3 @@ class Test_LDE(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
->>>>>>> cfe0732f3cb16e623fc7fa7b721317a874582eb8

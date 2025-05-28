@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-from modules.Listadobleenlazada import listadoble
-
-lista = listadoble()
-lista.mostrar()
-#print(lista.esta_vacia())
-lista.agregar_al_final(5)
-lista.agregar_al_final(0.4)
-lista.agregar_al_final("a")
-lista.mostrar()
-#print(lista.esta_vacia())
-print(lista._len_())
-=======
 import time
 import matplotlib.pyplot as plt
 from modulos.ListaDobleEnlazada import ListaDobleEnlazada
@@ -64,4 +51,3 @@ plt.legend()
 plt.grid(True)
 plt.tight_layout()
 plt.show()
->>>>>>> cfe0732f3cb16e623fc7fa7b721317a874582eb8
