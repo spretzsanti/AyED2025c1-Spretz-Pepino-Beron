@@ -1,4 +1,4 @@
-# 🐍Nombre del proyecto (darle un nombre significativo) 
+# 🐍Nombre del proyecto () 
 
 Breve descripción del proyecto:
 
@@ -35,10 +35,9 @@ El informe completo está disponible en la carpeta [docs](./docs) del proyecto.
 
 ---
 ## 🙎‍♀️🙎‍♂️Autores
-
-- Apellido y Nombre del primer integrante
-- Apellido y Nombre del primer integrante
-
+- Beron Gonzalo
+- Spretz Santiago
+- Pepino Pablo
 ---
 
 > **Consejo**: Mantén el README **actualizado** conforme evoluciona el proyecto, y elimina (o añade) secciones según necesites. Esta plantilla es sólo un punto de partida general.
