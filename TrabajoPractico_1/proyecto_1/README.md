@@ -9,7 +9,16 @@ Este es un script en el que se comparan algoritmos de ordenamiento. Permite gene
 
 Explica brevemente cómo está organizado el código (funciones y/o clases)
 
+La carpeta deps almacena las extensiones descargas en requirements.txt
 
+La carpeta modules contiene los modulos utilizados en el proyecto:
+   * clase BubbleSort: ordena ...
+   * clase Quicksort: ...
+   * clase Radix_sort: ...
+
+La carpeta test contiene los test utilizados para evaluar el correcto funcionamiento del codigo:
+   en este caso no se usa porque es evaluado con las fuciones de python
+* clase main: que ejecuta los algoritmos de ordenamiento y realiza una grafica comparativa
 
 Las gráficas de los resultados están disponible en la carpeta [data](./data) del proyecto.
 
