@@ -3,12 +3,13 @@
 
 Breve descripción del proyecto:
 
-Ejemplo: “Este es un script en el que se comparan algoritmos de ordenamiento. Permite [describir funcionalidades principales].
-
+Este es un script en el que se comparan algoritmos de ordenamiento. Permite generar listas de números aleatorios y ordenarlas utilizando tres algoritmos distintos: Bubble Sort, Quick Sort y Radix Sort, además de comparar sus resultados con la función nativa sorted() de Python.
 ---
 ## 🏗Arquitectura General
 
 Explica brevemente cómo está organizado el código (funciones y/o clases)
+
+
 
 Las gráficas de los resultados están disponible en la carpeta [data](./data) del proyecto.
 
