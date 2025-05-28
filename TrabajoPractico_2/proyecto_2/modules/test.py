@@ -40,6 +40,10 @@ print(temperatura_minima)
 
 #Probamos eliminar
 print (db.borrar_temperatura(fecha2))
+fecha2 = "07/08/2007"
 temperatura_max = db.max_temp_rango(fecha, fecha2)
 print("La nueva temperatura maxima es:")
 print (temperatura_max)
+
+
+print(db.devolver_temperatura(fecha))

@@ -207,65 +207,53 @@ class AVL:
 
         self.raiz = self._eliminar(self.raiz,fecha)
 
-    def _eliminar(self,nodo_actual,fecha):
+    def _eliminar(self, nodo_actual, fecha):
         if not nodo_actual:
             return nodo_actual
 
-        if fecha <  nodo_actual.fecha:
-            nodo_actual.izquierda = self._eliminar(nodo_actual.izquierda,fecha)
+        # 1. Bajamos por la rama correcta
+        if fecha < nodo_actual.fecha:
+            nodo_actual.izquierda = self._eliminar(nodo_actual.izquierda, fecha)
         elif fecha > nodo_actual.fecha:
-            nodo_actual.derecha = self._eliminar(nodo_actual.derecha,fecha)
-        else: #Aca ya lo encontramos
-            #Debemos tener en cuenta varios casos, esto se me ocurrio a mi cpz que hay alguna manera mas efectiva de hacerlo
-
-
-
-
-
-
-            #Caso 1 nodo con un solo hijo o sin hijos
+            nodo_actual.derecha = self._eliminar(nodo_actual.derecha, fecha)
+        else:
+            # 2. Encontramos el nodo a borrar
             if nodo_actual.izquierda is None:
-                nodo_temporal = nodo_actual.derecha
-                return nodo_temporal #El hijo de la derecha reemplaza al actual, si es none es none
+                return nodo_actual.derecha
             elif nodo_actual.derecha is None:
-                nodo_temporal = nodo_actual.izquierda
-                return nodo_temporal
+                return nodo_actual.izquierda
 
-            #Caso 2 nodo con dos hijos, aca vamos a aplicar el concepto de sucesor in-order revisar wiki, buscamos el mejor sucesor para los dos hijos huerfanos jajajajajjaja
+            # Caso con dos hijos: buscamos sucesor in-order
+            sucesor = self.obtener_valor_minimo(nodo_actual.derecha)
+            nodo_actual.fecha = sucesor.fecha
+            nodo_actual.temperatura = sucesor.temperatura
+            nodo_actual.derecha = self._eliminar(nodo_actual.derecha, sucesor.fecha)
 
-            #Buscamos el menor valor del arbol, es decir el "sucesor"
-            nodo_temporal = self.obtener_valor_minimo(nodo_actual.derecha)
+        # 3. (Muy importante) Tras borrar en la subrama, actualizamos altura y balance
+        self.actualizar_altura(nodo_actual)
+        balance = self.factor_eq(nodo_actual)
 
+        # 4. Rebalanceamos si es necesario (mismos casos que en la inserción)
+        #    • Rotación simple a la derecha
+        if balance > 1 and self.factor_eq(nodo_actual.izquierda) >= 0:
+            return self.rot_derecha(nodo_actual)
 
-            #Copiamos el sucesor en el eliminado
-            nodo_actual.fecha = nodo_temporal.fecha
-            nodo_actual.temperatura = nodo_temporal.temperatura
-            nodo_actual.derecha = self._eliminar(nodo_actual.derecha, nodo_temporal.fecha)
-            #Actualizamos altura
-            self.actualizar_altura(nodo_actual)
+        #    • Rotación simple a la izquierda
+        if balance < -1 and self.factor_eq(nodo_actual.derecha) <= 0:
+            return self.rot_izquierda(nodo_actual)
 
+        #    • Rotación doble (izq–der)
+        if balance > 1 and self.factor_eq(nodo_actual.izquierda) < 0:
+            nodo_actual.izquierda = self.rot_izquierda(nodo_actual.izquierda)
+            return self.rot_derecha(nodo_actual)
 
-            #Balance para luego rotar
-            balance = self.factor_eq(nodo_actual)
+        #    • Rotación doble (der–izq)
+        if balance < -1 and self.factor_eq(nodo_actual.derecha) > 0:
+            nodo_actual.derecha = self.rot_derecha(nodo_actual.derecha)
+            return self.rot_izquierda(nodo_actual)
 
-            #Rotaciones, las mismas que al insertar
-            if balance > 1 and fecha < nodo_actual.izquierda.fecha:
-                return self.rot_derecha(nodo_actual)
-
-                #Dos a la derecha
-            if balance < -1 and fecha > nodo_actual.derecha.fecha:
-                return self.rot_izquierda(nodo_actual)
-
-                #Izquierda y derecha
-            if balance > 1 and fecha > nodo_actual.izquierda.fecha:
-                    nodo_actual.izquierda = self.rot_izquierda(nodo_actual.izquierda)
-                    return self.rot_derecha(nodo_actual)
-                #Derecha y izquierda
-            if balance < -1 and fecha < nodo_actual.derecha.fecha:
-                    nodo_actual.derecha = self.rot_derecha(nodo_actual.derecha)
-                    return self.rot_izquierda(nodo_actual)
-
-            return nodo_actual #Si estaba bien
+        # 5. Finalmente, devolvemos el nodo actual (ya con su subárbol actualizado)
+        return nodo_actual
 
 
 
@@ -276,14 +264,7 @@ class AVL:
 
 
 
-
-
-
-
-
-
-
-        
+            
 
 
 

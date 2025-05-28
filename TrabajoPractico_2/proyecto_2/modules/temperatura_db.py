@@ -11,7 +11,7 @@ class temperatura_db:
     def _formato_fecha(self,fecha:str):
         fecha_obj = datetime.datetime.strptime(fecha, "%d/%m/%Y").date()
         if not isinstance(fecha_obj,datetime.date): 
-            raise(f"Error: El formato de la fecha '{fecha_str}' no es válido. Use 'dd/mm/aaaa'.")
+            raise(f"Error: El formato de la fecha '{fecha}' no es válido. Use 'dd/mm/aaaa'.")
 
         return fecha_obj
 
