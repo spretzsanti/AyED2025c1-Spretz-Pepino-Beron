@@ -49,6 +49,3 @@ class listadoble():
             count += 1
             actual = actual.siguiente
         return count
-
-    """def insertar(self, dato, posicion = None):
-        if posicion is None or ():"""

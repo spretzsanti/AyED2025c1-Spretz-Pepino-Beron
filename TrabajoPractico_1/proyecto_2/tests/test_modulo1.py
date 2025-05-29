@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-
-# Archivo de test para realizar pruebas unitarias del modulo1
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Sep  1 14:00:21 2022
-@author: Catedra de Algoritmos y Estructura de Datos
-"""
-
-=======
->>>>>>> f9501aeeb17917b834f4a477866f68d59d5f405b
 from modulos.ListaDobleEnlazada import ListaDobleEnlazada
 import unittest
 import random

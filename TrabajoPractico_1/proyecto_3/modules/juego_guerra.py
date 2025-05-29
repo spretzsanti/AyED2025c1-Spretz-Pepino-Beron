@@ -184,11 +184,3 @@ class JuegoGuerra:
         if self._ganador:
              print(f'         ***** 3){self._ganador} gana la partida*****                           ')  
 
-
-if __name__ == "__main__":
-
-    n = random.randint(0, 1000)
-    juego = JuegoGuerra(random_seed=n)
-    juego.iniciar_juego()
-    
-    print(n)
