@@ -110,27 +110,10 @@ class temperatura_db:
             print (False)
 
         
-        print ("Pre")
 
         self.arbol_temperatura.eliminar(fecha_obj)
         
         return True #Como veo si se elimino? Xq puede ser x casualidad la misma temperatura
-        
-
-
-        
-
-
-
-
-    
-            
-
-    
-
-
-
-
         
 
 
