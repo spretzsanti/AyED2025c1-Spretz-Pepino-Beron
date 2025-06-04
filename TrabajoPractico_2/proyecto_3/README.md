@@ -1,25 +1,27 @@
-# 🐍Nombre del proyecto (darle un nombre significativo) 
+# 🐍Palomas Mensajeras: Optimización de Rutas de Mensajería
 
 Breve descripción del proyecto:
 
-Ejemplo: “Este es un script en el que se comparan algoritmos de ordenamiento. Permite [describir funcionalidades principales].
+Este proyecto aborda el problema de encontrar la forma más eficiente de llevar un mensaje desde una aldea de origen, "Peligros", a un grupo de otras 21 aldeas. El sistema se basa en palomas mensajeras que solo pueden viajar a aldeas vecinas.El objetivo es que cada aldea reciba la noticia una sola vez, minimizando los recursos (distancia total recorrida).El proyecto utiliza la información de rutas y distancias provista en el archivo `aldeas.txt`.
 
 ---
 ## 🏗Arquitectura General
 
-Explica brevemente cómo está organizado el código (funciones y/o clases)
+El código está organizado de la siguiente manera:
 
-Las gráficas de los resultados están disponible en la carpeta [data](./data) del proyecto.
-
-El informe completo está disponible en la carpeta [docs](./docs) del proyecto.
+* Módulo de Grafo: Contiene la implementación de la estructura de datos del grafo (por ejemplo, usando listas de adyacencia o una matriz de adyacencia) y las operaciones asociadas (agregar nodos, aristas, etc.).
+* Módulo de Algoritmos: Implementa el algoritmo seleccionado para encontrar la ruta de difusión más eficiente (ej. Prim, Kruskal o similar para construir un Árbol de Expansión Mínima).
+* Módulo de Procesamiento de Datos: Encargado de leer el archivo `aldeas.txt` y transformar los datos en un formato utilizable por el módulo de grafo.
+* Script Principal (main.p):
+    * Orquesta la lectura de datos, la construcción del grafo y la ejecución del algoritmo.
+    * Presenta los resultados solicitados: lista de aldeas, plan de envío para cada aldea y la distancia total. [cite: 37, 39]
 
 ---
 ## 📑Dependencias
 
 1. **Python 3.x**
 2. **matplotlib** (`pip install matplotlib`)
-3. listar dependencias principales
-4. Dependencias listadas en requierements.txt
+
 
 ---
 ## 🚀Cómo Ejecutar el Proyecto
@@ -36,9 +38,9 @@ El informe completo está disponible en la carpeta [docs](./docs) del proyecto.
 ---
 ## 🙎‍♀️🙎‍♂️Autores
 
-- Apellido y Nombre del primer integrante
-- Apellido y Nombre del primer integrante
+- Spretz Santiago
+- Pepino Pablo
+- Beron Gonzalo
 
 ---
 
-> **Consejo**: Mantén el README **actualizado** conforme evoluciona el proyecto, y elimina (o añade) secciones según necesites. Esta plantilla es sólo un punto de partida general.
