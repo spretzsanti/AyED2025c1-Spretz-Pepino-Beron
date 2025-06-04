@@ -168,8 +168,6 @@ class AVL:
         return nodo_actual #Si estaba bien
 
 
-
-
     def obtener_rangos(self,fecha_min:datetime.date,fecha_max:datetime.date):
             temperaturas_encontradas = []
             self._obtener_rangos(self.raiz,fecha_min,fecha_max,temperaturas_encontradas)
@@ -190,8 +188,42 @@ class AVL:
             if fecha_max > nodo_actual.fecha:
                 self._obtener_rangos(nodo_actual.derecha, fecha_min, fecha_max, temperaturas_encontradas)
 
-    
-    #Este lo uso para 
+    #Metodo publico para obtener rangos en un orden
+    def obtener_datos_en_rango_ordenados(self, fecha_min, fecha_max):
+        datos_encontrados = []
+        self._obtener_datos_en_rango_ordenados(self.raiz, fecha_min, fecha_max,datos_encontrados)
+        return datos_encontrados
+
+    def _obtener_datos_en_rango_ordenados(self,nodo_actual, fecha_min, fecha_max,datos_encontrados):
+
+        if not nodo_actual:
+            return
+
+        if nodo_actual.fecha > fecha_min:
+            self._obtener_datos_en_rango_ordenados(nodo_actual.izquierda,fecha_min,fecha_max,datos_encontrados)
+
+        #Si esta en rango agregamos a datos encontrados
+        if fecha_min <= nodo_actual.fecha <= fecha_max:
+            datos_encontrados.append((nodo_actual.fecha, nodo_actual.temperatura))
+
+        if nodo_actual.fecha < fecha_max:
+            self._obtener_datos_en_rango_ordenados(nodo_actual.derecha, fecha_min, fecha_max, datos_encontrados)
+
+        
+
+    def contar_nodos(self):
+        return self._contar_nodos(self.raiz)
+
+    def _contar_nodos(self,nodo_actual):
+        if not nodo_actual:
+            return 0
+
+
+        return 1 +  self._contar_nodos(nodo_actual.izquierda) + self._contar_nodos(nodo_actual.derecha)
+
+
+
+    #Este lo uso para temperatura
     def obtener_valor_minimo(self,nodo_actual):
         if nodo_actual is None or nodo_actual.izquierda is None:
             return nodo_actual

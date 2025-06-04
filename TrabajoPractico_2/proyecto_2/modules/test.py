@@ -47,3 +47,7 @@ print (temperatura_max)
 
 
 print(db.devolver_temperatura(fecha))
+
+print("Prueba nuevas")
+print (db.devolver_temperaturas(fecha,fecha2))
+print(db.cantidad_muestras())

@@ -1,4 +1,4 @@
-from AVL import AVL
+from .AVL import AVL
 import datetime
 
 
@@ -113,7 +113,33 @@ class temperatura_db:
 
         self.arbol_temperatura.eliminar(fecha_obj)
         
-        return True #Como veo si se elimino? Xq puede ser x casualidad la misma temperatura
+        return True 
+
+    def devolver_temperaturas(self, fecha1, fecha2):
+        fecha1_obj = self._formato_fecha(fecha1)
+        fecha2_obj = self._formato_fecha(fecha2)
+        if fecha1_obj > fecha2_obj:
+            print("Error en devolver_temperaturas: La fecha1 debe ser anterior o igual a la fecha 2")
+            return None
+
+        datos_encontrados = self.arbol_temperatura.obtener_datos_en_rango_ordenados(fecha1_obj,fecha2_obj)
+        lista = []
+        for fecha, temperatura in datos_encontrados:
+            lista.append(f"{fecha.strftime('%d/%m/%Y')}: {temperatura}°C") 
+
+        if not lista:
+            print(f"Información: No se encontraron temperaturas en el rango {fecha1} - {fecha2}.")
+
+        return lista
+
+    
+    def cantidad_muestras(self):
+        return self.arbol_temperatura.contar_nodos()
+
+        
+
+
+
         
 
 
