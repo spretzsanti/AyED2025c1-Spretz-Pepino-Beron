@@ -36,6 +36,6 @@ class Grafo:
 
     def __iter__(self):
         return iter(self.listaVertices.values())
-
-if __name__ == "__main__":
-    pass
+    
+    def __len__(self):#metodo necesario para usar el len en el test
+        return self.numVertices  # Implementar este método
