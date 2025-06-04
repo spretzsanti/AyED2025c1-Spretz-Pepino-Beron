@@ -1,25 +1,23 @@
-# 🐍Nombre del proyecto (darle un nombre significativo) 
+# 🐍Temperaturas_DB: Base de Datos Climáticos con Árbol AVL
 
 Breve descripción del proyecto:
 
-Ejemplo: “Este es un script en el que se comparan algoritmos de ordenamiento. Permite [describir funcionalidades principales].
+Este proyecto implementa "Temperaturas_DB", una base de datos en memoria diseñada para gestionar eficientemente mediciones de temperatura. Utiliza internamente un árbol AVL para asegurar un rendimiento óptimo (logarítmico para la mayoría de las operaciones) en la inserción, búsqueda, eliminación y consulta de datos climáticos.Cada medición almacenada consiste en un valor de temperatura expresado en grados Celsius (°C) y su correspondiente fecha de registro en formato "dd/mm/aaaa".
 
 ---
 ## 🏗Arquitectura General
 
-Explica brevemente cómo está organizado el código (funciones y/o clases)
+* `modules/AVL.py` Contiene la implementación genérica y reutilizable de la estructura de datos Árbol AVL auto-balanceable. Esta clase maneja la lógica de nodos, rotaciones, inserciones, eliminaciones y búsquedas balanceadas.
+* `modules/temperatura_db.py`: Implementa la clase `Temperaturas_DB`. Esta clase actúa como una fachada, utilizando una instancia del árbol AVL para almacenar y gestionar los datos de temperatura, y expone la interfaz de operaciones descrita anteriormente.
+* `main.py`: Es el script principal utilizado para probar interactivamente el correcto funcionamiento de todos los métodos de la clase `Temperaturas_DB` permitiendo verificar la lógica de la base de datos.
 
-Las gráficas de los resultados están disponible en la carpeta [data](./data) del proyecto.
-
-El informe completo está disponible en la carpeta [docs](./docs) del proyecto.
 
 ---
 ## 📑Dependencias
 
 1. **Python 3.x**
 2. **matplotlib** (`pip install matplotlib`)
-3. listar dependencias principales
-4. Dependencias listadas en requierements.txt
+
 
 ---
 ## 🚀Cómo Ejecutar el Proyecto
@@ -36,9 +34,9 @@ El informe completo está disponible en la carpeta [docs](./docs) del proyecto.
 ---
 ## 🙎‍♀️🙎‍♂️Autores
 
-- Apellido y Nombre del primer integrante
-- Apellido y Nombre del primer integrante
+- Spretz Santiago
+- Pepino Pablo
+- Veron Gonzalo
 
 ---
 
-> **Consejo**: Mantén el README **actualizado** conforme evoluciona el proyecto, y elimina (o añade) secciones según necesites. Esta plantilla es sólo un punto de partida general.
