@@ -1,4 +1,4 @@
-from temperatura_db import temperatura_db
+from modules.temperatura_db import temperatura_db
 import datetime
 
 
