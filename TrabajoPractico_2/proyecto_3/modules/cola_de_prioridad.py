@@ -10,9 +10,9 @@ class ColaDePrioridad:
     def encolar(self, elemento):
         prioridad = self.clave(elemento)
         llegada = next(self._counter)
-        self.monticulo.insertar((prioridad, llegada, elemento))
+        self.monticulo.insertar((prioridad, llegada, elemento))#log(n)
 
-    def desencolar(self):
+    def desencolar(self):# log(n)
         if not self.monticulo:
             return None
         return self.monticulo.eliminarMin()[2]  # Elemento sin metadatos

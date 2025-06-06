@@ -287,11 +287,65 @@ class AVL:
         # 5. Finalmente, devolvemos el nodo actual (ya con su subárbol actualizado)
         return nodo_actual
 
+if __name__ == "__main__":
+    import datetime
+    arbol = AVL()  # Usar la clase AVL, no nodoAVL
+    
+    # Crear fechas válidas
+    date1 = datetime.date(2002, 8, 1)
+    date2 = datetime.date(2002, 8, 2)
+    date3 = datetime.date(2002, 8, 3)
 
+    # Insertar valores
+    arbol.insertar(date1, 24.3)
+    arbol.insertar(date2, 4.3)
+    arbol.insertar(date3, 40.3)
+    
+    print(arbol.raiz.fecha)
+    print("Altura:", arbol.raiz.altura)
 
+    date4 = datetime.date(2002, 8, 4)
+    date5 = datetime.date(2002, 8, 5)
+    date6 = datetime.date(2002, 8, 6)
+    date7 = datetime.date(2002, 8, 7)
+    arbol.insertar(date4, 41.3)
+    arbol.insertar(date5, 42.3)
+    arbol.insertar(date6, 46.3)
+    arbol.insertar(date7, 50.3)
+    
+    print(arbol.raiz.fecha)
+    print("Altura:", arbol.raiz.altura)
+    
+    # Pruebas básicas
+    print("Temperatura en", date1, ":", arbol.buscar(date1))  # Debe ser 24.3
+    print("Temperatura en", date2, ":", arbol.buscar(date2))  # Debe ser 4.3
+    
+    # Obtener rango de fechas
+    fecha_min = datetime.date(2002, 8, 1)
+    fecha_max = datetime.date(2002, 8, 3)
+    print("\nTemperaturas en rango:", arbol.obtener_rangos(fecha_min, fecha_max))
+    
+    # Eliminar un nodo
+    arbol.eliminar(date2)
+    print("\nDespués de eliminar", date2)
+    print("Temperatura en", date2, ":", arbol.buscar(date2))  # Debe ser None
+    
+    # Contar nodos
+    print("\nTotal de nodos:", arbol.contar_nodos())  # Debe ser 2
 
+    fecha_raiz = datetime.date(2002, 8, 3)
+    if arbol.raiz.fecha == fecha_raiz:
+        print("La raíz tiene la fecha esperada.")
+        print(arbol.raiz.fecha, "==", fecha_raiz)
+        print("Altura:", arbol.raiz.altura)
+    else:
+        print(arbol.raiz.fecha, "=!", fecha_raiz)
+        print("La raíz NO tiene la fecha esperada.")
 
+    
 
+    print(arbol.raiz.fecha)
+    print("Altura:", arbol.raiz.altura)
 
 
 

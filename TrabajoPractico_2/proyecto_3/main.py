@@ -33,28 +33,29 @@ def prim(grafo, inicio):
     inicio_vert = grafo.obtenerVertice(inicio)
     for vecino in inicio_vert.obtenerConexiones():
         peso = inicio_vert.obtenerPonderacion(vecino)
-        cola.encolar((peso, inicio, vecino.id))  # (peso, padre, nodo)
+        cola.encolar((peso, inicio, vecino.id))  # (peso, padre, nodo) #-> log e (aristas = e)
     
     # Procesar hasta visitar todos los nodos
-    while len(cola) > 0 and len(visitados) < len(grafo.listaVertices):
+    while len(cola) > 0 and len(visitados) < len(grafo.listaVertices): # v (v = vertices)
         # Obtener la arista de menor peso
-        peso, padre, nodo = cola.desencolar()
+        peso, padre, nodo = cola.desencolar()# log(e)
         
         if nodo in visitados:
             continue
             
-        visitados.add(nodo)
+        visitados.add(nodo)# O(1)
         arbol[nodo] = padre
         distancia_total += peso
         
         # Agregar vecinos del nuevo nodo
-        nodo_vert = grafo.obtenerVertice(nodo)
-        for vecino in nodo_vert.obtenerConexiones():
+        nodo_vert = grafo.obtenerVertice(nodo)# O(1)
+        for vecino in nodo_vert.obtenerConexiones(): # e
             if vecino.id not in visitados:
                 peso_arista = nodo_vert.obtenerPonderacion(vecino)
-                cola.encolar((peso_arista, nodo, vecino.id))
+                cola.encolar((peso_arista, nodo, vecino.id))#log(e)
     
-    return arbol, distancia_total
+    return arbol, distancia_total# log e + (v * (log e + (e * log e))) =>  v log(e)
+# O((v+e)*log(v))
 
 def main():
     # 1. Construir grafo desde archivo

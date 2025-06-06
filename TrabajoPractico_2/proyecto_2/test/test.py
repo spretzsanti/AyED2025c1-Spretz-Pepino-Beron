@@ -7,8 +7,8 @@ db = temperatura_db()
 #Insertamos un dato
 fecha = "07/08/2002"
 fecha2 = "07/08/2009"
-db.guardar_temperatura(24.3,"22/08/2002")
-db.guardar_temperatura(30.3,"07/08/2002")
+db.guardar_temperatura(24.3,"22/08/2002")# orden de fechas!
+db.guardar_temperatura(30.3,"07/08/2002")# rotaciones
 db.guardar_temperatura(24.3,"03/08/2002")
 db.guardar_temperatura(30.3,"04/08/2002")
 db.guardar_temperatura(40.3,"07/08/2009")

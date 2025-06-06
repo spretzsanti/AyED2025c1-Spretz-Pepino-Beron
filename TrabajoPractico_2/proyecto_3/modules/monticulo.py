@@ -18,7 +18,7 @@ class MonticuloBinario:
     def insertar(self,k):
       self.listaMonticulo.append(k)
       self.tamanoActual = self.tamanoActual + 1
-      self.infiltArriba(self.tamanoActual)
+      self.infiltArriba(self.tamanoActual) #log(n)
 
     def infiltAbajo(self,i):
       while (i * 2) <= self.tamanoActual:
@@ -42,8 +42,8 @@ class MonticuloBinario:
       valorSacado = self.listaMonticulo[1]
       self.listaMonticulo[1] = self.listaMonticulo[self.tamanoActual]
       self.tamanoActual = self.tamanoActual - 1
-      self.listaMonticulo.pop()
-      self.infiltAbajo(1)
+      self.listaMonticulo.pop() # O(1)
+      self.infiltAbajo(1)# log(n)
       return valorSacado
 
     def construirMonticulo(self,unaLista):
