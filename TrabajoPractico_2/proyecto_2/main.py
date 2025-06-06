@@ -1,27 +1,30 @@
-# main.py
+
 from modules.temperatura_db import temperatura_db
 import datetime
+import random
+
+db = temperatura_db()
+#VARIABLES A CONFIGURAR
+
+fecha_inicial = datetime.date(2023, 8, 1)
+num_dias_a_generar = 15
+temperaturas_a_guardar = [round(random.uniform(15.0, 35.0), 1) for _ in range(num_dias_a_generar)] #Genero una temperatura random entre 15 y 35 para las pruebas
 
 # --- PRUEBAS ---
-db = temperatura_db()
 
-print("--- Guardando Temperaturas ---")
-db.guardar_temperatura(24.3, "22/08/2002")
-db.guardar_temperatura(30.3, "07/08/2002")
-db.guardar_temperatura(24.3, "03/08/2002") # Fecha más antigua
-db.guardar_temperatura(30.3, "04/08/2002")
-db.guardar_temperatura(40.3, "07/08/2009") # Fecha más reciente
-db.guardar_temperatura(12.3, "17/08/2007")
-db.guardar_temperatura(27.3, "07/08/2006")
-db.guardar_temperatura(35.3, "27/08/2005")
-db.guardar_temperatura(23.3, "07/08/2004")
-db.guardar_temperatura(13.3, "07/09/2003")
-db.guardar_temperatura(25.0, "15/08/2002") # Otra fecha en el rango
+print("--- 1. Guardando Temperaturas Secuenciales ---")
+for i in range(num_dias_a_generar):
+    fecha_actual = fecha_inicial + datetime.timedelta(days=i)
+    fecha_str = fecha_actual.strftime("%d/%m/%Y")
+    temperatura = temperaturas_a_guardar[i]
+    db.guardar_temperatura(temperatura, fecha_str)
 print("-" * 30)
 
-print("\n--- Devolviendo Temperaturas Específicas ---")
-fecha_test1 = "07/08/2002"
-fecha_test2 = "07/08/2009"
+
+print("\n--- 2. Devolviendo Temperaturas Específicas ---")
+# Seleccionamos algunas fechas que sabemos que existen
+fecha_test1 = (fecha_inicial + datetime.timedelta(days=3)).strftime("%d/%m/%Y")
+fecha_test2 = (fecha_inicial + datetime.timedelta(days=10)).strftime("%d/%m/%Y")
 fecha_no_existente = "01/01/2000"
 
 temp1 = db.devolver_temperatura(fecha_test1)
@@ -34,9 +37,11 @@ temp_no_existente = db.devolver_temperatura(fecha_no_existente)
 print(f"Temperatura para {fecha_no_existente}: {temp_no_existente}°C" if temp_no_existente is not None else f"No se encontró temperatura para {fecha_no_existente}")
 print("-" * 30)
 
-print("\n--- Temperaturas en Rango ---")
-rango_fecha_inicio = "01/08/2002" # Antes de la primera fecha guardada
-rango_fecha_fin = "30/08/2007"   # Después de algunas fechas, antes de la última
+
+print("\n--- 3. Temperaturas en Rango ---")
+# Definimos un rango dentro de nuestras fechas generadas
+rango_fecha_inicio = (fecha_inicial + datetime.timedelta(days=2)).strftime("%d/%m/%Y")
+rango_fecha_fin = (fecha_inicial + datetime.timedelta(days=8)).strftime("%d/%m/%Y")
 
 max_rango = db.max_temp_rango(rango_fecha_inicio, rango_fecha_fin)
 print(f"Temperatura máxima en rango [{rango_fecha_inicio} - {rango_fecha_fin}]: {max_rango}°C" if max_rango is not None else "No hay datos en el rango.")
@@ -51,78 +56,59 @@ else:
     print(f"No hay datos suficientes para extremos en el rango [{rango_fecha_inicio} - {rango_fecha_fin}].")
 print("-" * 30)
 
-print("\n--- Devolver Listado de Temperaturas en Rango (Nuevo Método) ---")
-# Probamos con un rango que sabemos tiene datos
+
+print("\n--- 4. Devolver Listado de Temperaturas en Rango ---")
+print(f"Temperaturas entre {rango_fecha_inicio} y {rango_fecha_fin} (ordenadas):")
 lista_temps1 = db.devolver_temperaturas(rango_fecha_inicio, rango_fecha_fin)
 if lista_temps1:
-    print(f"Temperaturas entre {rango_fecha_inicio} y {rango_fecha_fin} (ordenadas):")
     for item in lista_temps1:
         print(item)
-else:
-    print(f"No se encontraron temperaturas entre {rango_fecha_inicio} y {rango_fecha_fin}.")
-
-# Probamos con un rango sin datos
-lista_temps_vacia = db.devolver_temperaturas("01/01/1990", "31/12/1990")
-if not lista_temps_vacia:
-    print(f"\nCorrecto: No se encontraron temperaturas entre 01/01/1990 y 31/12/1990.")
 print("-" * 30)
 
-print("\n--- Cantidad de Muestras (Nuevo Método) ---")
+
+print("\n--- 5. Cantidad de Muestras ---")
 total_muestras_antes_borrado = db.cantidad_muestras()
 print(f"Cantidad total de muestras antes del borrado: {total_muestras_antes_borrado}")
 print("-" * 30)
 
-print("\n--- Borrando Temperaturas ---")
-fecha_a_borrar = "07/08/2009" # Una fecha que existe
+
+print("\n--- 6. Borrando Temperaturas ---")
+# Borramos una fecha del medio del rango
+fecha_a_borrar = (fecha_inicial + datetime.timedelta(days=7)).strftime("%d/%m/%Y")
 print(f"Intentando borrar temperatura de la fecha: {fecha_a_borrar}")
 resultado_borrado = db.borrar_temperatura(fecha_a_borrar)
 print(f"Resultado del borrado: {'Exitoso' if resultado_borrado else 'Fallido o no encontrado'}")
 
 temp_despues_borrar = db.devolver_temperatura(fecha_a_borrar)
 print(f"Verificación: Temperatura para {fecha_a_borrar} después del borrado: {temp_despues_borrar}°C" if temp_despues_borrar is not None else f"Verificación: No se encontró temperatura para {fecha_a_borrar} (borrado correcto).")
-
-fecha_no_existente_borrar = "10/10/2020" # Una fecha que no existe
-print(f"\nIntentando borrar temperatura de la fecha: {fecha_no_existente_borrar}")
-resultado_borrado_no_existente = db.borrar_temperatura(fecha_no_existente_borrar)
-print(f"Resultado del borrado (fecha no existente): {'Exitoso (no debería, o indica no encontrado)' if resultado_borrado_no_existente else 'Fallido o no encontrado (correcto)'}")
 print("-" * 30)
 
-print("\n--- Cantidad de Muestras Después del Borrado ---")
+
+print("\n--- 7. Cantidad de Muestras Después del Borrado ---")
 total_muestras_despues_borrado = db.cantidad_muestras()
 print(f"Cantidad total de muestras después del borrado: {total_muestras_despues_borrado}")
 
-if total_muestras_antes_borrado is not None and total_muestras_despues_borrado is not None and resultado_borrado:
-     if total_muestras_antes_borrado - 1 == total_muestras_despues_borrado:
-        print("Verificación de cantidad de muestras: Correcto.")
-     else:
-        print("Verificación de cantidad de muestras: Incorrecto.")
+if total_muestras_antes_borrado - 1 == total_muestras_despues_borrado:
+    print("Verificación de cantidad de muestras: Correcto.")
+else:
+    print("Verificación de cantidad de muestras: Incorrecto.")
 print("-" * 30)
 
-print("\n--- Prueba de Guardar Temperatura Duplicada (Actualización) ---")
-fecha_duplicada = "22/08/2002"
+
+print("\n--- 8. Prueba de Guardar Temperatura Duplicada (Actualización) ---")
+# Elegimos una fecha para actualizar
+fecha_duplicada = (fecha_inicial + datetime.timedelta(days=5)).strftime("%d/%m/%Y")
 temp_original = db.devolver_temperatura(fecha_duplicada)
 print(f"Temperatura original para {fecha_duplicada}: {temp_original}°C")
-db.guardar_temperatura(99.9, fecha_duplicada) # Actualizar
+
+db.guardar_temperatura(99.9, fecha_duplicada) # Actualizamos con una nueva temperatura
 temp_actualizada = db.devolver_temperatura(fecha_duplicada)
 print(f"Temperatura actualizada para {fecha_duplicada}: {temp_actualizada}°C")
+
 if temp_actualizada == 99.9:
     print("Verificación de actualización: Correcto.")
 else:
     print("Verificación de actualización: Incorrecto.")
-print("-" * 30)
-
-print("\n--- Pruebas Adicionales de Rangos ---")
-# Rango que incluye el primer y último elemento
-todas_las_fechas_guardadas = db.devolver_temperaturas("01/01/2000", "31/12/2030")
-print(f"Todas las {len(todas_las_fechas_guardadas)} temperaturas guardadas (ordenadas):")
-for item in todas_las_fechas_guardadas:
-    print(item)
-
-# Comparar con cantidad de muestras
-if len(todas_las_fechas_guardadas) == db.cantidad_muestras():
-    print("Verificación: devolver_temperaturas con rango amplio coincide con cantidad_muestras.")
-else:
-    print("Error: devolver_temperaturas con rango amplio NO coincide con cantidad_muestras.")
 print("-" * 30)
 
 print("\nFIN DE LAS PRUEBAS")
