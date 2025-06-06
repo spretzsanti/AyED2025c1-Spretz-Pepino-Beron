@@ -8,6 +8,7 @@ db = temperatura_db()
 
 fecha_inicial = datetime.date(2023, 8, 1)
 num_dias_a_generar = 15
+#Esto es simplemente con el fin de probar el algoritmo en si, normalmente se guardaria la fecha y su temperatura con el metodo correspondiente
 temperaturas_a_guardar = [round(random.uniform(15.0, 35.0), 1) for _ in range(num_dias_a_generar)] #Genero una temperatura random entre 15 y 35 para las pruebas
 
 # --- PRUEBAS ---
