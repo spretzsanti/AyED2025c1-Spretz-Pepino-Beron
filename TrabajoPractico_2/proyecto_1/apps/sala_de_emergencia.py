@@ -34,7 +34,7 @@ for i in range(n):
 
     print("Pacientes ANTES de atender (en orden interno del heap):")
     for p in cola_prioridad:
-        print("\t", p)
+         print("\t", p[2])
 
     # Atención de paciente en este ciclo: en el 50% de los casos
     if random.random() < 0.5:
@@ -54,7 +54,7 @@ for i in range(n):
     # Se muestran los pacientes restantes en la cola de espera
     print('Pacientes que faltan atenderse:', cola_prioridad.__len__())
     for paciente in cola_prioridad:
-        print('\t', paciente)
+        print('\t', paciente[2])
         #print(paciente.devolver_orden_llegada())
     print()
     print('-*-'*15)

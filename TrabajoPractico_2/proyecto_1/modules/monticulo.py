@@ -1,6 +1,5 @@
 
 #el monticulo esta compuesto por listas de python
-from modules.pacientes import Paciente
 
 class MonticuloBinario:
     def __init__(self):
