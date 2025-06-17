@@ -37,7 +37,7 @@ class Paciente:
         cad = self.__nombre + ' '
         cad += self.__apellido + '\t -> '
         cad += str(self.__riesgo) + '-' + self.__descripcion
-        cad += ' ' + str(self.__posicion_en_la_fila)
+        cad += ' ' + str(self.__posicion_en_la_fila) #O(log N) -> convertir int a str tiene la complejidad proporiconal a su cantidad de digitos
         return cad
         
     def devolver_orden_llegada(self):
@@ -49,7 +49,7 @@ class Paciente:
         if  self.__riesgo != other.get_riesgo():
             return self.__riesgo < other.get_riesgo()
         else:
-            return self.devolver_orden_llegada() < other.devolver_orden_llegada()
+            return self.devolver_orden_llegada() < other.devolver_orden_llegada()#O(log N) -> comprar 2 enteros grandes tiene la complejidad O(log N) donde N es el maximo valor de los ordenes de llegada
         
         
-        
+# codigo estatico O(1)/ codigo dinamico crecion O(1) y ejecucion O(log N)

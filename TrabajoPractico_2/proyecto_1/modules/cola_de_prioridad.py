@@ -10,13 +10,13 @@ class ColaDePrioridad:
         self.monticulo = MonticuloBinario()
         self._counter = itertools.count()   # contador para romper empates
 
-    def encolar(self, k):# k = paciente
+    def encolar(self, k):# k = paciente # O(log n) -> por el monticulo.insertar()
         prioridad = k.get_riesgo()   # 1=crítico, 2=moderado, 3=bajo
         llegada   = next(self._counter)
         # heap sortea primero por 'prioridad' y luego por 'llegada'
-        self.monticulo.insertar( (prioridad, llegada, k) )# <- Tupla con criterios
+        self.monticulo.insertar( (prioridad, llegada, k) )# <- Tupla con criterios # O(log n)
 
-    def desencolar(self):
+    def desencolar(self):# O(log n) -> por el monticulo.eliminarMin()
         if not self.monticulo:
             return None
         return self.monticulo.eliminarMin()[2]  # <- Extraer el paciente de la tupla
@@ -32,4 +32,6 @@ class ColaDePrioridad:
         """
         # MonticuloBinario interna: listaMonticulo[1..tamanoActual]
         # Hacemos un slice para no alterar el heap real.
-        return iter(self.monticulo.listaMonticulo[1 : self.monticulo.tamanoActual + 1])
+        return iter(self.monticulo.listaMonticulo[1 : self.monticulo.tamanoActual + 1])# O(n) -> porque copia una porcion de la lista, copiar n elementos requiere O(n) operaciones
+    
+#estatico O(1)/ dinamico: encolar/desencolar O(log n); __iter__ O(n)  

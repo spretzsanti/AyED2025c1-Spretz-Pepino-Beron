@@ -19,7 +19,7 @@ cola_prioridad = ColaDePrioridad()  # instancia de tu cola de prioridad basada e
 
 
 # Ciclo que gestiona la simulación
-for i in range(n):
+for i in range(n):# O(n log n)
     orden_de_llegada = i
     # Fecha y hora de entrada de un paciente
     ahora = datetime.datetime.now()
@@ -30,17 +30,17 @@ for i in range(n):
     # Se crea un paciente un paciente por segundo
     # La criticidad del paciente es aleatoria
     paciente = pac.Paciente(orden_de_llegada)# pasamos el orden de llegada
-    cola_prioridad.encolar(paciente)
+    cola_prioridad.encolar(paciente)# O(log n)
 
     print("Pacientes ANTES de atender (en orden interno del heap):")
     for p in cola_prioridad:
-         print("\t", p[2])
+         print("\t", p[2])# O(n)
 
     # Atención de paciente en este ciclo: en el 50% de los casos
     if random.random() < 0.5:
         if cola_prioridad.__len__() > 0:
             print("se ejecuto el desencolar")
-            paciente_atendido = cola_prioridad.desencolar()
+            paciente_atendido = cola_prioridad.desencolar()# O(log n)
             # se atiende paciente que se encuentra al frente de la cola
             print('*'*40)
             print('Se atiende el paciente:', paciente_atendido)
@@ -53,10 +53,12 @@ for i in range(n):
 
     # Se muestran los pacientes restantes en la cola de espera
     print('Pacientes que faltan atenderse:', cola_prioridad.__len__())
-    for paciente in cola_prioridad:
+    for paciente in cola_prioridad:# O(n)
         print('\t', paciente[2])
         #print(paciente.devolver_orden_llegada())
     print()
     print('-*-'*15)
     
     time.sleep(1)
+
+# estatica O(1)/ dinamica: O(n²) -> operacion del heap (O(n log n)), sin mebargo las iteraciones completas lo hacen cuadrático.
