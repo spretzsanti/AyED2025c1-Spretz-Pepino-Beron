@@ -98,7 +98,7 @@ class AVL:
 
 
     #Metodo publico de busqueda
-    def buscar(self,fecha_obj:datetime.date):
+    def buscar(self,fecha_obj:datetime.date):#O(log n) -> por linea 103 "self._buscar_nodo(self.raiz,fecha_obj)"
         
         nodo_encontrado = self._buscar_nodo(self.raiz,fecha_obj)
         if nodo_encontrado:
@@ -107,7 +107,7 @@ class AVL:
 
 
     #Metodo privado de busqueda
-    def _buscar_nodo(self,nodo_actual,fecha_obj):
+    def _buscar_nodo(self,nodo_actual,fecha_obj):#O(log n) -> busqueda recursiva en el arbol AVL
         if not nodo_actual or nodo_actual.fecha == fecha_obj:
             return nodo_actual
 
@@ -117,12 +117,12 @@ class AVL:
             return self._buscar_nodo(nodo_actual.derecha, fecha_obj)
 
     #Metodo publico de insersion
-    def insertar(self,fecha:datetime.date, temperatura:float):
+    def insertar(self,fecha:datetime.date, temperatura:float):#O(log n) -> por linea 121 (self._insertar(self.raiz,fecha,temperatura))
         self.raiz = self._insertar(self.raiz,fecha,temperatura)
 
 
     #Metodos del propio arbol, privado
-    def _insertar(self,nodo_actual,fecha:datetime.date, temperatura:float):
+    def _insertar(self,nodo_actual,fecha:datetime.date, temperatura:float):#O(log n) -> recorre camino desde la raiz hasta las hojas, las rotaciones son O(1) pero se ejecutan en cada nivel
 
         #Inserciones normales
         if not nodo_actual:
@@ -168,12 +168,14 @@ class AVL:
         return nodo_actual #Si estaba bien
 
 
-    def obtener_rangos(self,fecha_min:datetime.date,fecha_max:datetime.date):
+    def obtener_rangos(self,fecha_min:datetime.date,fecha_max:datetime.date):# O(k + log n) -> por linea 173
             temperaturas_encontradas = []
             self._obtener_rangos(self.raiz,fecha_min,fecha_max,temperaturas_encontradas)
             return temperaturas_encontradas
 
-    def _obtener_rangos(self,nodo_actual,fecha_min,fecha_max,temperaturas_encontradas):
+    def _obtener_rangos(self,nodo_actual,fecha_min,fecha_max,temperaturas_encontradas):# O(k + log n) -> k = nodos en el rango [fecha_min, fecha_max]; Debe recorrer todos los nodos dentro del rango (k); Más el costo de llegar al rango (log n)
+
+
             if not nodo_actual:
                 return
 
@@ -189,12 +191,12 @@ class AVL:
                 self._obtener_rangos(nodo_actual.derecha, fecha_min, fecha_max, temperaturas_encontradas)
 
     #Metodo publico para obtener rangos en un orden
-    def obtener_datos_en_rango_ordenados(self, fecha_min, fecha_max):
+    def obtener_datos_en_rango_ordenados(self, fecha_min, fecha_max):# O(k + log n) -> linea 196
         datos_encontrados = []
         self._obtener_datos_en_rango_ordenados(self.raiz, fecha_min, fecha_max,datos_encontrados)
         return datos_encontrados
 
-    def _obtener_datos_en_rango_ordenados(self,nodo_actual, fecha_min, fecha_max,datos_encontrados):
+    def _obtener_datos_en_rango_ordenados(self,nodo_actual, fecha_min, fecha_max,datos_encontrados):# O(k + log n)-> Recorre k nodos en el rango y Más costo de navegación al rango (log n); (similar al anterior)
 
         if not nodo_actual:
             return
@@ -211,10 +213,10 @@ class AVL:
 
         
 
-    def contar_nodos(self):
+    def contar_nodos(self):#  O(n) -> linea 217
         return self._contar_nodos(self.raiz)
 
-    def _contar_nodos(self,nodo_actual):
+    def _contar_nodos(self,nodo_actual):#  O(n) -> Recorre recursivamente todos los nodos del árbol
         if not nodo_actual:
             return 0
 
@@ -224,7 +226,7 @@ class AVL:
 
 
     #Este lo uso para temperatura
-    def obtener_valor_minimo(self,nodo_actual):
+    def obtener_valor_minimo(self,nodo_actual):# O(log n) -> busca el nodo mas a la izquierda (peor caso recorre la altura del arbol)
         if nodo_actual is None or nodo_actual.izquierda is None:
             return nodo_actual
         actual = nodo_actual
@@ -234,12 +236,12 @@ class AVL:
 
 
     
-    def eliminar(self,fecha:datetime.date):
+    def eliminar(self,fecha:datetime.date):# O(log n) -> linea 242
         #Al eliminar cualquier nodo puede ser la nueva raiz
 
         self.raiz = self._eliminar(self.raiz,fecha)
 
-    def _eliminar(self, nodo_actual, fecha):
+    def _eliminar(self, nodo_actual, fecha):# O(log n) -> Busca el nodo (log n) + busca sucesor (log n)
         if not nodo_actual:
             return nodo_actual
 
@@ -264,6 +266,7 @@ class AVL:
         # 3. (Muy importante) Tras borrar en la subrama, actualizamos altura y balance
         self.actualizar_altura(nodo_actual)
         balance = self.factor_eq(nodo_actual)
+
 
         # 4. Rebalanceamos si es necesario (mismos casos que en la inserción)
         #    • Rotación simple a la derecha
@@ -333,7 +336,7 @@ if __name__ == "__main__":
     # Contar nodos
     print("\nTotal de nodos:", arbol.contar_nodos())  # Debe ser 2
 
-    fecha_raiz = datetime.date(2002, 8, 3)
+    fecha_raiz = datetime.date(2002, 8, 4)
     if arbol.raiz.fecha == fecha_raiz:
         print("La raíz tiene la fecha esperada.")
         print(arbol.raiz.fecha, "==", fecha_raiz)
@@ -341,13 +344,20 @@ if __name__ == "__main__":
     else:
         print(arbol.raiz.fecha, "=!", fecha_raiz)
         print("La raíz NO tiene la fecha esperada.")
-
-    
+    """
+    2002-08-01 -> raíz
+    2002-08-02 -> rotación izquierda (raíz pasa a ser 02)
+    2002-08-03 -> rotación izquierda (raíz pasa a ser 03)
+    2002-08-04 -> rotación doble (raíz pasa a ser 04)
+    2002-08-05 -> se inserta sin cambiar raíz
+    2002-08-06 -> rotación izquierda (raíz sigue siendo 04)
+    2002-08-07 -> rotación izquierda (raíz sigue siendo 04)
+    """
 
     print(arbol.raiz.fecha)
     print("Altura:", arbol.raiz.altura)
 
-
+#estatico: O(1) / dinamico: Búsqueda/Inserción/Eliminación en O(log n); Consultas por rango en O(k + log n); Operaciones completas (O(n))
 
 
             

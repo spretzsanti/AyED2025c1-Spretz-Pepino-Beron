@@ -1,4 +1,4 @@
-from .AVL import AVL
+from modules.AVL import AVL
 import datetime
 
 
