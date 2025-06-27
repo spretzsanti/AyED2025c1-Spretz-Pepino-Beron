@@ -57,7 +57,7 @@ class AVL:
 
     #Rotaciones
     
-    #Podemos modificar los nombres para que sean mas representativos?Estan los comentarios igual PRG a PROFE
+    
     def rot_derecha(self, z): #Z es el nodo de arriba del todo pre rotacion
         y = z.izquierda #Nueva raiz
         T2 = y.derecha
