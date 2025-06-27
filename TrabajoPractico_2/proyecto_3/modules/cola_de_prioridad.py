@@ -12,13 +12,13 @@ class ColaDePrioridad:
         llegada = next(self._counter)
         self.monticulo.insertar((prioridad, llegada, elemento))#log(n)
 
-    def desencolar(self):# log(n)
+    def desencolar(self):
         if not self.monticulo:
             return None
-        return self.monticulo.eliminarMin()[2]  # Elemento sin metadatos
+        return self.monticulo.eliminarMin()[2]  #log(n)
 
     def __len__(self):
         return len(self.monticulo)
 
     def __iter__(self):
-        return iter(item[2] for item in self.monticulo.listaMonticulo[1:self.monticulo.tamanoActual+1])
+        return iter(item[2] for item in self.monticulo.listaMonticulo[1:self.monticulo.tamanoActual+1])#O(n)

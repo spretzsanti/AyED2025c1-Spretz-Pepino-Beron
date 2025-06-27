@@ -2,13 +2,13 @@ from modules.cola_de_prioridad import ColaDePrioridad
 from modules.grafo import Grafo
 from collections import defaultdict
 
-def construirGrafo(archivoPalabras):
+def construirGrafo(archivoPalabras):#O(L)
     d = {}
     g = Grafo()
-    with open(archivoPalabras, 'r', encoding='utf-8') as archivo:  # ¡Solución aquí!
-        for linea in archivo:
+    with open(archivoPalabras, 'r', encoding='utf-8') as archivo:
+        for linea in archivo:# O(L) - L = número de líneas
             # Eliminar espacios y dividir por comas
-            partes = [p.strip() for p in linea.strip().split(',')]
+            partes = [p.strip() for p in linea.strip().split(',')]# O(K) - K = palabras por línea
             
             if len(partes) < 3:  # Saltar líneas incompletas
                 continue
@@ -20,7 +20,7 @@ def construirGrafo(archivoPalabras):
             g.agregarArista(aldea2, aldea1, distancia)
     return g
 
-def prim(grafo, inicio):
+def prim(grafo, inicio):# 	O(E log E)
     """Algoritmo de Prim para obtener el árbol de expansión mínima usando MonticuloBinario"""
     visitados = set([inicio])
     arbol = {}  # padre_de[nodo] = padre
@@ -31,14 +31,14 @@ def prim(grafo, inicio):
     
     # Inicializar con vecinos del nodo inicial
     inicio_vert = grafo.obtenerVertice(inicio)
-    for vecino in inicio_vert.obtenerConexiones():
-        peso = inicio_vert.obtenerPonderacion(vecino)
+    for vecino in inicio_vert.obtenerConexiones():# O(d) - d = grado del nodo inicial
+        peso = inicio_vert.obtenerPonderacion(vecino)# O(log E)
         cola.encolar((peso, inicio, vecino.id))  # (peso, padre, nodo) #-> log e (aristas = e)
     
     # Procesar hasta visitar todos los nodos
-    while len(cola) > 0 and len(visitados) < len(grafo.listaVertices): # v (v = vertices)
+    while len(cola) > 0 and len(visitados) < len(grafo.listaVertices): #  O(V) iteraciones (v = vertices)
         # Obtener la arista de menor peso
-        peso, padre, nodo = cola.desencolar()# log(e)
+        peso, padre, nodo = cola.desencolar() # O(log E)
         
         if nodo in visitados:
             continue
@@ -49,35 +49,35 @@ def prim(grafo, inicio):
         
         # Agregar vecinos del nuevo nodo
         nodo_vert = grafo.obtenerVertice(nodo)# O(1)
-        for vecino in nodo_vert.obtenerConexiones(): # e
+        for vecino in nodo_vert.obtenerConexiones(): # O(d) - d = grado del nodo actual
             if vecino.id not in visitados:
                 peso_arista = nodo_vert.obtenerPonderacion(vecino)
-                cola.encolar((peso_arista, nodo, vecino.id))#log(e)
+                cola.encolar((peso_arista, nodo, vecino.id)) # O(log E)
     
     return arbol, distancia_total# log e + (v * (log e + (e * log e))) =>  v log(e)
 # O((v+e)*log(v))
 
-def main():
+def main():# O(L + V log V + E log E + V²)	= V²
     # 1. Construir grafo desde archivo
-    grafo = construirGrafo("data/aldeas.txt")
-    aldeas = list(grafo.obtenerVertices())
-    aldeas_ordenadas = sorted(aldeas)
+    grafo = construirGrafo("data/aldeas.txt")# O(L)
+    aldeas = list(grafo.obtenerVertices())# O(V)
+    aldeas_ordenadas = sorted(aldeas)# O(V log V)
     
     # 2. Aplicar algoritmo de Prim desde "Peligros"
-    padre_de, distancia_total = prim(grafo, "Peligros")
+    padre_de, distancia_total = prim(grafo, "Peligros")# O(E log E)
     
     # Construir estructura de hijos
     hijos_de = defaultdict(list)
-    for hijo, padre in padre_de.items():
-        hijos_de[padre].append(hijo)
+    for hijo, padre in padre_de.items(): # O(V)
+        hijos_de[padre].append(hijo)# O(1)
     
     # 3. Mostrar resultados
     print("Aldeas en orden alfabético:")
-    for aldea in aldeas_ordenadas:
+    for aldea in aldeas_ordenadas:# O(V)
         print(f"- {aldea}")
     
     print("\nEstructura de envíos:")
-    for aldea in aldeas_ordenadas:
+    for aldea in aldeas_ordenadas:# O(V)
         # Determinar quién envía la noticia a esta aldea
         if aldea == "Peligros":
             recibe_de = "Ninguno (inicio)"
@@ -86,7 +86,7 @@ def main():
         
         # Determinar a quién reenvía esta aldea
         envia_a = hijos_de.get(aldea, [])
-        envia_a_str = ", ".join(envia_a) if envia_a else "Ninguna"
+        envia_a_str = ", ".join(envia_a) if envia_a else "Ninguna"# O(h) - h = número de hijos
         
         print(f"\nAldea: {aldea}")
         print(f"  Recibe de: {recibe_de}")
