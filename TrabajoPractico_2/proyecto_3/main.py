@@ -2,13 +2,13 @@ from modules.cola_de_prioridad import ColaDePrioridad
 from modules.grafo import Grafo
 from collections import defaultdict
 
-def construirGrafo(archivoPalabras):#O(L)
+def construirGrafo(archivoPalabras):
     d = {}
     g = Grafo()
     with open(archivoPalabras, 'r', encoding='utf-8') as archivo:
-        for linea in archivo:# O(L) - L = número de líneas
+        for linea in archivo:
             # Eliminar espacios y dividir por comas
-            partes = [p.strip() for p in linea.strip().split(',')]# O(K) - K = palabras por línea
+            partes = [p.strip() for p in linea.strip().split(',')]
             
             if len(partes) < 3:  # Saltar líneas incompletas
                 continue
@@ -20,10 +20,10 @@ def construirGrafo(archivoPalabras):#O(L)
             g.agregarArista(aldea2, aldea1, distancia)
     return g
 
-def prim(grafo, inicio):# 	O(E log E)
+def prim(grafo, inicio):
     """Algoritmo de Prim para obtener el árbol de expansión mínima usando MonticuloBinario"""
     visitados = set([inicio])
-    arbol = {}  # padre_de[nodo] = padre
+    arbol = {}  
     distancia_total = 0
     
     # Crear cola de prioridad para manejar las aristas
@@ -31,53 +31,52 @@ def prim(grafo, inicio):# 	O(E log E)
     
     # Inicializar con vecinos del nodo inicial
     inicio_vert = grafo.obtenerVertice(inicio)
-    for vecino in inicio_vert.obtenerConexiones():# O(d) - d = grado del nodo inicial
-        peso = inicio_vert.obtenerPonderacion(vecino)# O(log E)
-        cola.encolar((peso, inicio, vecino.id))  # (peso, padre, nodo) #-> log e (aristas = e)
+    for vecino in inicio_vert.obtenerConexiones():
+        peso = inicio_vert.obtenerPonderacion(vecino)
+        cola.encolar((peso, inicio, vecino.id))  
     
     # Procesar hasta visitar todos los nodos
-    while len(cola) > 0 and len(visitados) < len(grafo.listaVertices): #  O(V) iteraciones (v = vertices)
+    while len(cola) > 0 and len(visitados) < len(grafo.listaVertices):
         # Obtener la arista de menor peso
-        peso, padre, nodo = cola.desencolar() # O(log E)
+        peso, padre, nodo = cola.desencolar() 
         
         if nodo in visitados:
             continue
             
-        visitados.add(nodo)# O(1)
+        visitados.add(nodo)
         arbol[nodo] = padre
         distancia_total += peso
         
         # Agregar vecinos del nuevo nodo
-        nodo_vert = grafo.obtenerVertice(nodo)# O(1)
-        for vecino in nodo_vert.obtenerConexiones(): # O(d) - d = grado del nodo actual
+        nodo_vert = grafo.obtenerVertice(nodo)
+        for vecino in nodo_vert.obtenerConexiones(): 
             if vecino.id not in visitados:
                 peso_arista = nodo_vert.obtenerPonderacion(vecino)
-                cola.encolar((peso_arista, nodo, vecino.id)) # O(log E)
+                cola.encolar((peso_arista, nodo, vecino.id)) 
     
-    return arbol, distancia_total# log e + (v * (log e + (e * log e))) =>  v log(e)
-# O((v+e)*log(v))
+    return arbol, distancia_total
 
-def main():# O(L + V log V + E log E + V²)	= V²
+def main():
     # 1. Construir grafo desde archivo
-    grafo = construirGrafo("data/aldeas.txt")# O(L)
-    aldeas = list(grafo.obtenerVertices())# O(V)
-    aldeas_ordenadas = sorted(aldeas)# O(V log V)
+    grafo = construirGrafo("data/aldeas.txt")
+    aldeas = list(grafo.obtenerVertices())
+    aldeas_ordenadas = sorted(aldeas)
     
     # 2. Aplicar algoritmo de Prim desde "Peligros"
-    padre_de, distancia_total = prim(grafo, "Peligros")# O(E log E)
+    padre_de, distancia_total = prim(grafo, "Peligros")
     
     # Construir estructura de hijos
     hijos_de = defaultdict(list)
-    for hijo, padre in padre_de.items(): # O(V)
-        hijos_de[padre].append(hijo)# O(1)
+    for hijo, padre in padre_de.items(): 
+        hijos_de[padre].append(hijo)
     
     # 3. Mostrar resultados
     print("Aldeas en orden alfabético:")
-    for aldea in aldeas_ordenadas:# O(V)
+    for aldea in aldeas_ordenadas:
         print(f"- {aldea}")
     
     print("\nEstructura de envíos:")
-    for aldea in aldeas_ordenadas:# O(V)
+    for aldea in aldeas_ordenadas:
         # Determinar quién envía la noticia a esta aldea
         if aldea == "Peligros":
             recibe_de = "Ninguno (inicio)"
@@ -86,7 +85,7 @@ def main():# O(L + V log V + E log E + V²)	= V²
         
         # Determinar a quién reenvía esta aldea
         envia_a = hijos_de.get(aldea, [])
-        envia_a_str = ", ".join(envia_a) if envia_a else "Ninguna"# O(h) - h = número de hijos
+        envia_a_str = ", ".join(envia_a) if envia_a else "Ninguna"
         
         print(f"\nAldea: {aldea}")
         print(f"  Recibe de: {recibe_de}")

@@ -15,11 +15,11 @@ from modules.cola_de_prioridad import ColaDePrioridad  # tu envoltorio del mont�
 
 n = 20  # cantidad de ciclos de simulación
 
-cola_prioridad = ColaDePrioridad()  # instancia de tu cola de prioridad basada en MonticuloBinario
+cola_prioridad = ColaDePrioridad()  # instancia de la cola de prioridad basada en MonticuloBinario
 
 
 # Ciclo que gestiona la simulación
-for i in range(n):# O(n log n)
+for i in range(n):
     orden_de_llegada = i
     # Fecha y hora de entrada de un paciente
     ahora = datetime.datetime.now()
@@ -30,17 +30,17 @@ for i in range(n):# O(n log n)
     # Se crea un paciente un paciente por segundo
     # La criticidad del paciente es aleatoria
     paciente = pac.Paciente(orden_de_llegada)# pasamos el orden de llegada
-    cola_prioridad.encolar(paciente)# O(log n)
+    cola_prioridad.encolar(paciente)
 
     print("Pacientes ANTES de atender (en orden interno del heap):")
     for p in cola_prioridad:
-         print("\t", p[2])# O(n)
+         print("\t", p[2])
 
     # Atención de paciente en este ciclo: en el 50% de los casos
     if random.random() < 0.5:
         if cola_prioridad.__len__() > 0:
             print("se ejecuto el desencolar")
-            paciente_atendido = cola_prioridad.desencolar()# O(log n)
+            paciente_atendido = cola_prioridad.desencolar()
             # se atiende paciente que se encuentra al frente de la cola
             print('*'*40)
             print('Se atiende el paciente:', paciente_atendido)
@@ -60,5 +60,3 @@ for i in range(n):# O(n log n)
     print('-*-'*15)
     
     time.sleep(1)
-
-# estatica O(1)/ dinamica: O(n²) -> operacion del heap (O(n log n)), sin mebargo las iteraciones completas lo hacen cuadrático.

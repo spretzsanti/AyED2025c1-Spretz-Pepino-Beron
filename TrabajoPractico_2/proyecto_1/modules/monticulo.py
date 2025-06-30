@@ -7,7 +7,7 @@ class MonticuloBinario:
         self.tamanoActual = 0
 
 
-    def infiltArriba(self,i):# O(log n) -> cada iteracion reduce la posicion a la mitad
+    def infiltArriba(self,i):
         while i // 2 > 0:
           if self.listaMonticulo[i] < self.listaMonticulo[i // 2]:
              tmp = self.listaMonticulo[i // 2]
@@ -15,12 +15,12 @@ class MonticuloBinario:
              self.listaMonticulo[i] = tmp
           i = i // 2
 
-    def insertar(self,k):#O(log n) -> por esto self.infiltArriba
+    def insertar(self,k):
       self.listaMonticulo.append(k)
       self.tamanoActual = self.tamanoActual + 1
       self.infiltArriba(self.tamanoActual)
 
-    def infiltAbajo(self,i):#O(log n) -> cada iteracion duplica la posicion, inverso al infiltArriba()
+    def infiltAbajo(self,i):
       while (i * 2) <= self.tamanoActual:
           hm = self.hijoMin(i)
           if self.listaMonticulo[i] > self.listaMonticulo[hm]:
@@ -38,7 +38,7 @@ class MonticuloBinario:
           else:
               return i * 2 + 1
 
-    def eliminarMin(self):#O(log n) -> por esto self.infiltAbajo(1)
+    def eliminarMin(self):
       valorSacado = self.listaMonticulo[1]
       self.listaMonticulo[1] = self.listaMonticulo[self.tamanoActual]
       self.tamanoActual = self.tamanoActual - 1
@@ -46,7 +46,7 @@ class MonticuloBinario:
       self.infiltAbajo(1)
       return valorSacado
 
-    def construirMonticulo(self,unaLista):# O(n) -> debido a que los nodos altos estan cerca de las hojas, a pesar de que el self.infiltAbajo(n) tiene una complejidad de O(log N)
+    def construirMonticulo(self,unaLista):
       i = len(unaLista) // 2
       self.tamanoActual = len(unaLista)
       self.listaMonticulo = [0] + unaLista[:]
@@ -60,4 +60,3 @@ class MonticuloBinario:
     def __bool__(self):
         return self.tamanoActual > 0
 
-    #estatico O(1)/ dinamico: Inserción/eliminación: O(log n); construcción del heap: O(n) 

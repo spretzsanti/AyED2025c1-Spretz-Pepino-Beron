@@ -8,7 +8,7 @@ class MonticuloBinario:
 
 
     def infiltArriba(self,i):
-        while i // 2 > 0:# O(log n)
+        while i // 2 > 0:
           if self.listaMonticulo[i] < self.listaMonticulo[i // 2]:
              tmp = self.listaMonticulo[i // 2]
              self.listaMonticulo[i // 2] = self.listaMonticulo[i]
@@ -18,10 +18,10 @@ class MonticuloBinario:
     def insertar(self,k):
       self.listaMonticulo.append(k)
       self.tamanoActual = self.tamanoActual + 1
-      self.infiltArriba(self.tamanoActual) #log(n)
+      self.infiltArriba(self.tamanoActual) 
 
     def infiltAbajo(self,i):
-      while (i * 2) <= self.tamanoActual:# O(log n)
+      while (i * 2) <= self.tamanoActual:
           hm = self.hijoMin(i)
           if self.listaMonticulo[i] > self.listaMonticulo[hm]:
               tmp = self.listaMonticulo[i]
@@ -42,16 +42,16 @@ class MonticuloBinario:
       valorSacado = self.listaMonticulo[1]
       self.listaMonticulo[1] = self.listaMonticulo[self.tamanoActual]
       self.tamanoActual = self.tamanoActual - 1
-      self.listaMonticulo.pop() # O(1)
-      self.infiltAbajo(1)# log(n)
+      self.listaMonticulo.pop()
+      self.infiltAbajo(1)
       return valorSacado
 
-    def construirMonticulo(self,unaLista):# O(n) => O(n(log n)/2) = por la suma total de operaciones = O(n) 
+    def construirMonticulo(self,unaLista):
       i = len(unaLista) // 2
       self.tamanoActual = len(unaLista)
       self.listaMonticulo = [0] + unaLista[:]
-      while (i > 0):# O(n/2) -> porque i//2 en linea 50
-          self.infiltAbajo(i)# O(log n)
+      while (i > 0):
+          self.infiltAbajo(i)
           i = i - 1
 
     def __len__(self):

@@ -9,7 +9,7 @@ class Vertice:
         self.conectadoA[vecino] = ponderacion
 
     def __str__(self):
-        return str(self.id) + ' conectadoA: ' + str([x.id for x in self.conectadoA])# O(n)
+        return str(self.id) + ' conectadoA: ' + str([x.id for x in self.conectadoA])
 
     def obtenerConexiones(self):
         return self.conectadoA.keys()

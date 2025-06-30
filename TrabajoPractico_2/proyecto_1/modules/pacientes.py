@@ -37,7 +37,7 @@ class Paciente:
         cad = self.__nombre + ' '
         cad += self.__apellido + '\t -> '
         cad += str(self.__riesgo) + '-' + self.__descripcion
-        cad += ' ' + str(self.__posicion_en_la_fila) #O(log N) -> convertir int a str tiene la complejidad proporiconal a su cantidad de digitos
+        cad += ' ' + str(self.__posicion_en_la_fila) 
         return cad
         
     def devolver_orden_llegada(self):
@@ -45,11 +45,8 @@ class Paciente:
 
 
     def __lt__(self, other):# esto es una sobrecarga que permite comparar el orden de llegada de los pacientes
-                            ##tener en cuenta prioridad y orden de llegada
+                            
         if  self.__riesgo != other.get_riesgo():
             return self.__riesgo < other.get_riesgo()
         else:
-            return self.devolver_orden_llegada() < other.devolver_orden_llegada()#O(log N) -> comprar 2 enteros grandes tiene la complejidad O(log N) donde N es el maximo valor de los ordenes de llegada
-        
-        
-# codigo estatico O(1)/ codigo dinamico crecion O(1) y ejecucion O(log N)
+            return self.devolver_orden_llegada() < other.devolver_orden_llegada()

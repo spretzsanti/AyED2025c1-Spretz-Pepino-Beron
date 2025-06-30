@@ -57,7 +57,7 @@ class temperatura_db:
         if not temperaturas: # Si la lista está vacía
             return None 
 
-        return max(temperaturas) #Esto se podria hacer con los algoritmo de ordenamiento de la otra vez pero esto ya esta implementado
+        return max(temperaturas)
 
     
     def min_temp_rango(self,fecha1, fecha2):

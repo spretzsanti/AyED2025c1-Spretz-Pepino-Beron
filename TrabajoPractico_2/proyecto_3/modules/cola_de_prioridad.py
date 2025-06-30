@@ -10,15 +10,15 @@ class ColaDePrioridad:
     def encolar(self, elemento):
         prioridad = self.clave(elemento)
         llegada = next(self._counter)
-        self.monticulo.insertar((prioridad, llegada, elemento))#log(n)
+        self.monticulo.insertar((prioridad, llegada, elemento))
 
     def desencolar(self):
         if not self.monticulo:
             return None
-        return self.monticulo.eliminarMin()[2]  #log(n)
+        return self.monticulo.eliminarMin()[2]  
 
     def __len__(self):
         return len(self.monticulo)
 
     def __iter__(self):
-        return iter(item[2] for item in self.monticulo.listaMonticulo[1:self.monticulo.tamanoActual+1])#O(n)
+        return iter(item[2] for item in self.monticulo.listaMonticulo[1:self.monticulo.tamanoActual+1])

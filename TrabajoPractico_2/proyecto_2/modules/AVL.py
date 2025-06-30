@@ -3,8 +3,6 @@ import datetime
 
 class nodoAVL: #Cada nodoAVL es un dato de temperatura y fecha en si
     def __init__(self,fecha:datetime.date,temperatura):
-        #Logicas para fechas, habria que revisarlo
-        #si la fecha es un string
       
         if not isinstance(fecha,datetime.date):
             raise ValueError("La fecha debe venir en el formato correspondiente (Error en guardar_temp)")
@@ -18,7 +16,7 @@ class nodoAVL: #Cada nodoAVL es un dato de temperatura y fecha en si
         self.altura = 1 #La altura de un nuevo nodo es 1
 
 
-    #Esta funcion devuelve los valores, no se pide como tal pero la hago por las dudas
+    #Esta funcion devuelve los valores
     def datos(self):
         return f"{self.fecha.strftime('%d/%m/%Y')}: {self.temperatura}°C (H:{self.altura})"
 
@@ -49,7 +47,7 @@ class AVL:
     def actualizar_altura(self, nodo):
         if not nodo: # Si el nodo es None
             return   # No hacemos nada y salimos
-        # Si el nodo SÍ existe, entonces procedemos con la lógica original:
+        # Si el nodo SÍ existe, entonces procedemos:
         nodo.altura = 1 + max(self.altura(nodo.izquierda), self.altura(nodo.derecha))
 
 
@@ -67,8 +65,8 @@ class AVL:
         z.izquierda = T2
 
         #Actualizamos alturas
-        self.actualizar_altura(z) #Altura depende de hijos como tal no cambio la altura
-        self.actualizar_altura(y) #Esta altura si cambia ya que depende de hijos que tinen hijos
+        self.actualizar_altura(z)
+        self.actualizar_altura(y)
 
         return y #Devuelvo la raiz nueva
 
@@ -76,16 +74,13 @@ class AVL:
         y = z.derecha
         T2 = y.izquierda
 
-        #Rotacion
         y.izquierda = z
         z.derecha = T2
 
-        #Act altura
-        #Actualizamos alturas
-        self.actualizar_altura(z) #Altura depende de hijos como tal no cambio la altura
-        self.actualizar_altura(y) #Esta altura si cambia ya que depende de hijos que tinen hijos
+        self.actualizar_altura(z)
+        self.actualizar_altura(y)
 
-        return y #Devuelvo la raiz nueva
+        return y
 
 
     def rot_izq_der(self,z):
@@ -98,7 +93,7 @@ class AVL:
 
 
     #Metodo publico de busqueda
-    def buscar(self,fecha_obj:datetime.date):#O(log n) -> por linea 103 "self._buscar_nodo(self.raiz,fecha_obj)"
+    def buscar(self,fecha_obj:datetime.date):
         
         nodo_encontrado = self._buscar_nodo(self.raiz,fecha_obj)
         if nodo_encontrado:
@@ -107,7 +102,7 @@ class AVL:
 
 
     #Metodo privado de busqueda
-    def _buscar_nodo(self,nodo_actual,fecha_obj):#O(log n) -> busqueda recursiva en el arbol AVL
+    def _buscar_nodo(self,nodo_actual,fecha_obj):
         if not nodo_actual or nodo_actual.fecha == fecha_obj:
             return nodo_actual
 
@@ -117,12 +112,12 @@ class AVL:
             return self._buscar_nodo(nodo_actual.derecha, fecha_obj)
 
     #Metodo publico de insersion
-    def insertar(self,fecha:datetime.date, temperatura:float):#O(log n) -> por linea 121 (self._insertar(self.raiz,fecha,temperatura))
+    def insertar(self,fecha:datetime.date, temperatura:float):
         self.raiz = self._insertar(self.raiz,fecha,temperatura)
 
 
     #Metodos del propio arbol, privado
-    def _insertar(self,nodo_actual,fecha:datetime.date, temperatura:float):#O(log n) -> recorre camino desde la raiz hasta las hojas, las rotaciones son O(1) pero se ejecutan en cada nivel
+    def _insertar(self,nodo_actual,fecha:datetime.date, temperatura:float):
 
         #Inserciones normales
         if not nodo_actual:
@@ -146,9 +141,8 @@ class AVL:
         balance = self.factor_eq(nodo_actual)
 
         
-        #AHorad dependiendo del valor del factor de equolibrio hacemos las rotaciones correspondiente
-        #Dos a la izq
-        #El nodo está cargado a la izquierda (balance > 1) y se inserto en el subárbol izquierdo de su hijo izquierdo
+        #Ahora dependiendo del valor del factor eq hacemos la rotacion correspondiente
+        #Dos a la izquierda
         if balance > 1 and fecha < nodo_actual.izquierda.fecha:
             return self.rot_derecha(nodo_actual)
 
@@ -165,15 +159,15 @@ class AVL:
             nodo_actual.derecha = self.rot_derecha(nodo_actual.derecha)
             return self.rot_izquierda(nodo_actual)
 
-        return nodo_actual #Si estaba bien
+        return nodo_actual 
 
 
-    def obtener_rangos(self,fecha_min:datetime.date,fecha_max:datetime.date):# O(k + log n) -> por linea 173
+    def obtener_rangos(self,fecha_min:datetime.date,fecha_max:datetime.date):
             temperaturas_encontradas = []
             self._obtener_rangos(self.raiz,fecha_min,fecha_max,temperaturas_encontradas)
             return temperaturas_encontradas
 
-    def _obtener_rangos(self,nodo_actual,fecha_min,fecha_max,temperaturas_encontradas):# O(k + log n) -> k = nodos en el rango [fecha_min, fecha_max]; Debe recorrer todos los nodos dentro del rango (k); Más el costo de llegar al rango (log n)
+    def _obtener_rangos(self,nodo_actual,fecha_min,fecha_max,temperaturas_encontradas):
 
 
             if not nodo_actual:
@@ -191,12 +185,12 @@ class AVL:
                 self._obtener_rangos(nodo_actual.derecha, fecha_min, fecha_max, temperaturas_encontradas)
 
     #Metodo publico para obtener rangos en un orden
-    def obtener_datos_en_rango_ordenados(self, fecha_min, fecha_max):# O(k + log n) -> linea 196
+    def obtener_datos_en_rango_ordenados(self, fecha_min, fecha_max):
         datos_encontrados = []
         self._obtener_datos_en_rango_ordenados(self.raiz, fecha_min, fecha_max,datos_encontrados)
         return datos_encontrados
 
-    def _obtener_datos_en_rango_ordenados(self,nodo_actual, fecha_min, fecha_max,datos_encontrados):# O(k + log n)-> Recorre k nodos en el rango y Más costo de navegación al rango (log n); (similar al anterior)
+    def _obtener_datos_en_rango_ordenados(self,nodo_actual, fecha_min, fecha_max,datos_encontrados):
 
         if not nodo_actual:
             return
@@ -213,10 +207,10 @@ class AVL:
 
         
 
-    def contar_nodos(self):#  O(n) -> linea 217
+    def contar_nodos(self):
         return self._contar_nodos(self.raiz)
 
-    def _contar_nodos(self,nodo_actual):#  O(n) -> Recorre recursivamente todos los nodos del árbol
+    def _contar_nodos(self,nodo_actual):
         if not nodo_actual:
             return 0
 
@@ -226,7 +220,7 @@ class AVL:
 
 
     #Este lo uso para temperatura
-    def obtener_valor_minimo(self,nodo_actual):# O(log n) -> busca el nodo mas a la izquierda (peor caso recorre la altura del arbol)
+    def obtener_valor_minimo(self,nodo_actual):
         if nodo_actual is None or nodo_actual.izquierda is None:
             return nodo_actual
         actual = nodo_actual
@@ -236,12 +230,12 @@ class AVL:
 
 
     
-    def eliminar(self,fecha:datetime.date):# O(log n) -> linea 242
+    def eliminar(self,fecha:datetime.date):
         #Al eliminar cualquier nodo puede ser la nueva raiz
 
         self.raiz = self._eliminar(self.raiz,fecha)
 
-    def _eliminar(self, nodo_actual, fecha):# O(log n) -> Busca el nodo (log n) + busca sucesor (log n)
+    def _eliminar(self, nodo_actual, fecha):
         if not nodo_actual:
             return nodo_actual
 
@@ -263,7 +257,7 @@ class AVL:
             nodo_actual.temperatura = sucesor.temperatura
             nodo_actual.derecha = self._eliminar(nodo_actual.derecha, sucesor.fecha)
 
-        # 3. (Muy importante) Tras borrar en la subrama, actualizamos altura y balance
+        # 3. Tras borrar en la subrama, actualizamos altura y balance
         self.actualizar_altura(nodo_actual)
         balance = self.factor_eq(nodo_actual)
 
@@ -287,7 +281,7 @@ class AVL:
             nodo_actual.derecha = self.rot_derecha(nodo_actual.derecha)
             return self.rot_izquierda(nodo_actual)
 
-        # 5. Finalmente, devolvemos el nodo actual (ya con su subárbol actualizado)
+        # 5. Finalmente, devolvemos el nodo actual
         return nodo_actual
 
 if __name__ == "__main__":
@@ -356,19 +350,3 @@ if __name__ == "__main__":
 
     print(arbol.raiz.fecha)
     print("Altura:", arbol.raiz.altura)
-
-#estatico: O(1) / dinamico: Búsqueda/Inserción/Eliminación en O(log n); Consultas por rango en O(k + log n); Operaciones completas (O(n))
-
-
-            
-
-
-
-
-
-
- 
-
-
-
-
